@@ -1,1251 +1,1147 @@
-diff --git a/index.html b/index.html
-index 69ed48045c9640e97a9958e46e21e628c8191500..f3d50bf9a78b4045bfec0efee714f4eef80faf40 100644
---- a/index.html
-+++ b/index.html
-@@ -1,34 +1,34 @@
- <!DOCTYPE html>
- <html lang="ja">
- <head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
- <meta name="apple-mobile-web-app-capable" content="yes">
- <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
- <meta name="theme-color" content="#0a0a2e">
--<title>Crystal Clicker</title>
-+<title>クリスタルクリッカー</title>
- <style>
- *, *::before, *::after {
-   box-sizing: border-box;
-   margin: 0;
-   padding: 0;
- }
- 
- :root {
-   --bg-primary: #0a0a2e;
-   --bg-secondary: #12123a;
-   --bg-card: #1a1a4e;
-   --bg-card-hover: #222266;
-   --accent: #7c5cfc;
-   --accent-light: #a78bfa;
-   --accent-glow: rgba(124, 92, 252, 0.4);
-   --gold: #fbbf24;
-   --gold-glow: rgba(251, 191, 36, 0.4);
-   --text-primary: #e8e8ff;
-   --text-secondary: #9090c0;
-   --text-muted: #606090;
-   --success: #34d399;
-   --danger: #f87171;
-   --crystal-1: #60a5fa;
-   --crystal-2: #a78bfa;
-   --crystal-3: #f472b6;
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a2e">
+<title>クリスタルクリッカー</title>
+<style>
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0a0a2e;
+  --bg-secondary: #12123a;
+  --bg-card: #1a1a4e;
+  --bg-card-hover: #222266;
+  --accent: #7c5cfc;
+  --accent-light: #a78bfa;
+  --accent-glow: rgba(124, 92, 252, 0.4);
+  --gold: #fbbf24;
+  --gold-glow: rgba(251, 191, 36, 0.4);
+  --text-primary: #e8e8ff;
+  --text-secondary: #9090c0;
+  --text-muted: #606090;
+  --success: #34d399;
+  --danger: #f87171;
+  --crystal-1: #60a5fa;
+  --crystal-2: #a78bfa;
+  --crystal-3: #f472b6;
 @@ -382,50 +382,73 @@ body {
-   flex-shrink: 0;
- }
- 
- .upgrade-cost {
-   font-size: 13px;
-   font-weight: 700;
-   color: var(--crystal-1);
- }
- 
- .upgrade-level {
-   font-size: 11px;
-   color: var(--text-muted);
-   margin-top: 2px;
- }
- 
- /* Progress bar on upgrade card */
- .upgrade-progress {
-   position: absolute;
-   bottom: 0;
-   left: 0;
-   height: 2px;
-   background: var(--accent);
-   transition: width 0.3s;
- }
- 
-+.buy-amount-selector {
-+  display: flex;
-+  gap: 6px;
-+  margin: 8px 0 12px;
-+}
-+
-+.buy-amount-btn {
-+  flex: 1;
-+  border: 1px solid rgba(124, 92, 252, 0.25);
-+  background: rgba(124, 92, 252, 0.08);
-+  color: var(--text-secondary);
-+  border-radius: 8px;
-+  padding: 7px 4px;
-+  font-size: 11px;
-+  font-weight: 700;
-+}
-+
-+.buy-amount-btn.active {
-+  background: rgba(124, 92, 252, 0.28);
-+  border-color: rgba(124, 92, 252, 0.6);
-+  color: var(--text-primary);
-+}
-+
- /* Achievement Cards */
- .achievement-card {
-   display: flex;
-   align-items: center;
-   gap: 10px;
-   background: var(--bg-card);
-   border: 1px solid rgba(124, 92, 252, 0.1);
-   border-radius: 12px;
-   padding: 10px 12px;
-   margin-bottom: 6px;
-   transition: all 0.2s;
- }
- 
- .achievement-card.unlocked {
-   border-color: rgba(251, 191, 36, 0.3);
-   background: rgba(251, 191, 36, 0.05);
- }
- 
- .achievement-card.locked {
-   opacity: 0.35;
- }
- 
- .achievement-icon {
-   width: 36px;
-   height: 36px;
+  flex-shrink: 0;
+}
+
+.upgrade-cost {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--crystal-1);
+}
+
+.upgrade-level {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Progress bar on upgrade card */
+.upgrade-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.buy-amount-selector {
+  display: flex;
+  gap: 6px;
+  margin: 8px 0 12px;
+}
+
+.buy-amount-btn {
+  flex: 1;
+  border: 1px solid rgba(124, 92, 252, 0.25);
+  background: rgba(124, 92, 252, 0.08);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 7px 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.buy-amount-btn.active {
+  background: rgba(124, 92, 252, 0.28);
+  border-color: rgba(124, 92, 252, 0.6);
+  color: var(--text-primary);
+}
+
+/* Achievement Cards */
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid rgba(124, 92, 252, 0.1);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  transition: all 0.2s;
+}
+
+.achievement-card.unlocked {
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(251, 191, 36, 0.05);
+}
+
+.achievement-card.locked {
+  opacity: 0.35;
+}
+
+.achievement-icon {
+  width: 36px;
+  height: 36px;
 @@ -774,162 +797,163 @@ body {
-   100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
- }
- 
- /* Screen shake */
- @keyframes shake {
-   0%, 100% { transform: translateX(0); }
-   25% { transform: translateX(-2px); }
-   75% { transform: translateX(2px); }
- }
- 
- .shake {
-   animation: shake 0.1s ease;
- }
- 
- /* Scrollbar */
- .tab-content::-webkit-scrollbar { width: 4px; }
- .tab-content::-webkit-scrollbar-track { background: transparent; }
- .tab-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
- </style>
- </head>
- <body>
- 
- <div id="app">
-   <!-- Header -->
-   <div class="header">
--    <div class="header-title">Crystal Clicker</div>
-+    <div class="header-title">クリスタルクリッカー</div>
-     <div class="header-stats">
-       <span id="header-cps">0/s</span>
--      <span id="header-clicks">0 tap</span>
-+      <span id="header-clicks">0 タップ</span>
-     </div>
-   </div>
- 
-   <!-- Resource Display -->
-   <div class="resource-display">
-     <div class="crystal-count" id="crystal-count">0</div>
--    <div class="crystal-label">Crystals</div>
--    <div class="cps-display" id="cps-display">0 crystals / sec</div>
-+    <div class="crystal-label">クリスタル</div>
-+    <div class="cps-display" id="cps-display">0 クリスタル / 秒</div>
-     <div class="prestige-display" id="prestige-display"></div>
-   </div>
- 
-   <!-- Click Area -->
-   <div class="click-area">
-     <button class="crystal-btn" id="crystal-btn">
-       <span class="click-power-label" id="click-power-label">+1</span>
-     </button>
-   </div>
- 
-   <!-- Tab Navigation -->
-   <nav class="tab-nav">
-     <button class="tab-btn active" data-tab="upgrades">
-       <span class="tab-icon">&#9650;</span>
--      <span>Upgrade</span>
-+      <span>強化</span>
-       <span class="badge" id="badge-upgrades"></span>
-     </button>
-     <button class="tab-btn" data-tab="auto">
-       <span class="tab-icon">&#9881;</span>
--      <span>Auto</span>
-+      <span>施設</span>
-       <span class="badge" id="badge-auto"></span>
-     </button>
-     <button class="tab-btn" data-tab="prestige">
-       <span class="tab-icon">&#9733;</span>
--      <span>Prestige</span>
-+      <span>転生</span>
-       <span class="badge" id="badge-prestige"></span>
-     </button>
-     <button class="tab-btn" data-tab="achievements">
-       <span class="tab-icon">&#127942;</span>
--      <span>Achieve</span>
-+      <span>実績</span>
-       <span class="badge" id="badge-achievements"></span>
-     </button>
-     <button class="tab-btn" data-tab="settings">
-       <span class="tab-icon">&#9776;</span>
--      <span>Menu</span>
-+      <span>メニュー</span>
-     </button>
-   </nav>
- 
-   <!-- Tab Content -->
-   <div class="tab-content">
-     <!-- Upgrades Panel -->
-     <div class="tab-panel active" id="panel-upgrades"></div>
- 
-     <!-- Auto Panel -->
-     <div class="tab-panel" id="panel-auto"></div>
- 
-     <!-- Prestige Panel -->
-     <div class="tab-panel" id="panel-prestige"></div>
- 
--    <!-- Achievements Panel -->
-+    <!-- 実績 Panel -->
-     <div class="tab-panel" id="panel-achievements"></div>
- 
-     <!-- Settings Panel -->
-     <div class="tab-panel" id="panel-settings"></div>
-   </div>
- </div>
- 
- <!-- Particles -->
- <div id="particles"></div>
- 
- <!-- Toast -->
- <div class="toast" id="toast">
-   <span class="toast-icon" id="toast-icon"></span>
-   <span class="toast-text" id="toast-text"></span>
- </div>
- 
- <!-- Modal -->
- <div class="modal-overlay" id="modal">
-   <div class="modal-box">
-     <div class="modal-title" id="modal-title"></div>
-     <div class="modal-text" id="modal-text"></div>
-     <div class="modal-reward" id="modal-reward"></div>
-     <button class="modal-btn" id="modal-btn">OK</button>
-   </div>
- </div>
- 
- <script>
- // =========================================================
- // Crystal Clicker - Full Featured Mobile Clicker Game
- // =========================================================
- 
- (function() {
- 'use strict';
- 
- // ─── Number Formatting ───────────────────────────────────
- const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
-+const BUY_AMOUNTS = [10, 25, 100, 'max'];
- 
- function formatNum(n) {
-   if (n < 1000) return Math.floor(n).toString();
-   const tier = Math.min(Math.floor(Math.log10(Math.abs(n)) / 3), SUFFIXES.length - 1);
-   const scaled = n / Math.pow(10, tier * 3);
-   return scaled.toFixed(scaled < 10 ? 2 : scaled < 100 ? 1 : 0) + SUFFIXES[tier];
- }
- 
- function formatTime(seconds) {
--  if (seconds < 60) return `${Math.floor(seconds)}s`;
--  if (seconds < 3600) return `${Math.floor(seconds / 60)}m ${Math.floor(seconds % 60)}s`;
-+  if (seconds < 60) return `${Math.floor(seconds)}秒`;
-+  if (seconds < 3600) return `${Math.floor(seconds / 60)}分 ${Math.floor(seconds % 60)}秒`;
-   const h = Math.floor(seconds / 3600);
-   const m = Math.floor((seconds % 3600) / 60);
--  return `${h}h ${m}m`;
-+  return `${h}時間 ${m}分`;
- }
- 
- function formatPercent(mult) {
-   return `${Math.round((mult - 1) * 100)}%`;
- }
- 
- function getAchievementRewardText(reward) {
-   if (!reward) return '';
-   return reward.label || '';
- }
- 
- // ─── Audio Engine (Web Audio API) ────────────────────────
- const AudioEngine = {
-   ctx: null,
-   enabled: true,
- 
-   init() {
-     try {
-       this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-     } catch (e) { this.enabled = false; }
-   },
- 
-   resume() {
-     if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
-   },
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+}
+
+/* Screen shake */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.shake {
+  animation: shake 0.1s ease;
+}
+
+/* Scrollbar */
+.tab-content::-webkit-scrollbar { width: 4px; }
+.tab-content::-webkit-scrollbar-track { background: transparent; }
+.tab-content::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-title">クリスタルクリッカー</div>
+    <div class="header-stats">
+      <span id="header-cps">0/s</span>
+      <span id="header-clicks">0 タップ</span>
+    </div>
+  </div>
+
+  <!-- Resource Display -->
+  <div class="resource-display">
+    <div class="crystal-count" id="crystal-count">0</div>
+    <div class="crystal-label">クリスタル</div>
+    <div class="cps-display" id="cps-display">0 クリスタル / 秒</div>
+    <div class="prestige-display" id="prestige-display"></div>
+  </div>
+
+  <!-- Click Area -->
+  <div class="click-area">
+    <button class="crystal-btn" id="crystal-btn">
+      <span class="click-power-label" id="click-power-label">+1</span>
+    </button>
+  </div>
+
+  <!-- Tab Navigation -->
+  <nav class="tab-nav">
+    <button class="tab-btn active" data-tab="upgrades">
+      <span class="tab-icon">&#9650;</span>
+      <span>強化</span>
+      <span class="badge" id="badge-upgrades"></span>
+    </button>
+    <button class="tab-btn" data-tab="auto">
+      <span class="tab-icon">&#9881;</span>
+      <span>施設</span>
+      <span class="badge" id="badge-auto"></span>
+    </button>
+    <button class="tab-btn" data-tab="prestige">
+      <span class="tab-icon">&#9733;</span>
+      <span>転生</span>
+      <span class="badge" id="badge-prestige"></span>
+    </button>
+    <button class="tab-btn" data-tab="achievements">
+      <span class="tab-icon">&#127942;</span>
+      <span>実績</span>
+      <span class="badge" id="badge-achievements"></span>
+    </button>
+    <button class="tab-btn" data-tab="settings">
+      <span class="tab-icon">&#9776;</span>
+      <span>メニュー</span>
+    </button>
+  </nav>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- Upgrades Panel -->
+    <div class="tab-panel active" id="panel-upgrades"></div>
+
+    <!-- Auto Panel -->
+    <div class="tab-panel" id="panel-auto"></div>
+
+    <!-- Prestige Panel -->
+    <div class="tab-panel" id="panel-prestige"></div>
+
+    <!-- 実績 Panel -->
+    <div class="tab-panel" id="panel-achievements"></div>
+
+    <!-- Settings Panel -->
+    <div class="tab-panel" id="panel-settings"></div>
+  </div>
+</div>
+
+<!-- Particles -->
+<div id="particles"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon" id="toast-icon"></span>
+  <span class="toast-text" id="toast-text"></span>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-title" id="modal-title"></div>
+    <div class="modal-text" id="modal-text"></div>
+    <div class="modal-reward" id="modal-reward"></div>
+    <button class="modal-btn" id="modal-btn">OK</button>
+  </div>
+</div>
+
+<script>
+// =========================================================
+// Crystal Clicker - Full Featured Mobile Clicker Game
+// =========================================================
+
+(function() {
+'use strict';
+
+// ─── Number Formatting ───────────────────────────────────
+const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
+const BUY_AMOUNTS = [10, 25, 100, 'max'];
+
+function formatNum(n) {
+  if (n < 1000) return Math.floor(n).toString();
+  const tier = Math.min(Math.floor(Math.log10(Math.abs(n)) / 3), SUFFIXES.length - 1);
+  const scaled = n / Math.pow(10, tier * 3);
+  return scaled.toFixed(scaled < 10 ? 2 : scaled < 100 ? 1 : 0) + SUFFIXES[tier];
+}
+
+function formatTime(seconds) {
+  if (seconds < 60) return `${Math.floor(seconds)}秒`;
+  if (seconds < 3600) return `${Math.floor(seconds / 60)}分 ${Math.floor(seconds % 60)}秒`;
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  return `${h}時間 ${m}分`;
+}
+
+function formatPercent(mult) {
+  return `${Math.round((mult - 1) * 100)}%`;
+}
+
+function getAchievementRewardText(reward) {
+  if (!reward) return '';
+  return reward.label || '';
+}
+
+// ─── Audio Engine (Web Audio API) ────────────────────────
+const AudioEngine = {
+  ctx: null,
+  enabled: true,
+
+  init() {
+    try {
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    } catch (e) { this.enabled = false; }
+  },
+
+  resume() {
+    if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume();
+  },
 @@ -990,51 +1014,51 @@ const AUTO_UPGRADES = [
-   { id: 'dragon', name: 'Baby Dragon', icon: '&#128009;', desc: '+500/s', baseCost: 200000, costMult: 1.15, cps: 500, maxLv: 40, unlock: 50000 },
-   { id: 'phoenix', name: 'Phoenix', icon: '&#128038;', desc: '+2500/s', baseCost: 2e6, costMult: 1.15, cps: 2500, maxLv: 30, unlock: 500000 },
-   { id: 'titan', name: 'Ancient Titan', icon: '&#128122;', desc: '+15000/s', baseCost: 2.5e7, costMult: 1.15, cps: 15000, maxLv: 20, unlock: 5000000 },
-   { id: 'nebula', name: 'Nebula Core', icon: '&#127752;', desc: '+100000/s', baseCost: 5e8, costMult: 1.15, cps: 100000, maxLv: 15, unlock: 100000000 },
-   { id: 'forge', name: 'Astral Forge', icon: '&#127981;', desc: '+650000/s', baseCost: 8e9, costMult: 1.16, cps: 650000, maxLv: 12, unlock: 2e9 },
-   { id: 'rift', name: 'Rift Extractor', icon: '&#128301;', desc: '+3.5M/s', baseCost: 2e11, costMult: 1.17, cps: 3.5e6, maxLv: 10, unlock: 8e10 },
-   { id: 'chrono', name: 'Chrono Reactor', icon: '&#9201;', desc: '+20M/s', baseCost: 6e12, costMult: 1.18, cps: 2e7, maxLv: 8, unlock: 2e12 },
-   { id: 'singularity', name: 'Singularity Engine', icon: '&#128171;', desc: '+150M/s', baseCost: 3e14, costMult: 1.2, cps: 1.5e8, maxLv: 6, unlock: 1e14 },
- ];
- 
- // Prestige upgrades (bought with stars)
- const PRESTIGE_UPGRADES = [
-   { id: 'p_click', name: 'Starlit Fingers', icon: '&#11088;', desc: 'Tap power x2', cost: 1, effect: 'clickMult', value: 2 },
-   { id: 'p_cps', name: 'Cosmic Flow', icon: '&#127776;', desc: 'Auto speed x2', cost: 2, effect: 'cpsMult', value: 2 },
-   { id: 'p_cheap', name: 'Bargain Hunter', icon: '&#128176;', desc: 'Upgrades 15% cheaper', cost: 3, effect: 'costReduction', value: 0.85 },
-   { id: 'p_offline', name: 'Dream Mining', icon: '&#127769;', desc: 'Offline gains x2', cost: 2, effect: 'offlineMult', value: 2 },
-   { id: 'p_click2', name: 'Star Hammer', icon: '&#128296;', desc: 'Tap power x3', cost: 5, effect: 'clickMult', value: 3 },
-   { id: 'p_cps2', name: 'Galaxy Engine', icon: '&#128640;', desc: 'Auto speed x3', cost: 5, effect: 'cpsMult', value: 3 },
-   { id: 'p_start', name: 'Head Start', icon: '&#127939;', desc: 'Start with 1000 crystals per star', cost: 3, effect: 'headStart', value: 1000 },
-   { id: 'p_super', name: 'Supernova', icon: '&#128165;', desc: 'All production x5', cost: 10, effect: 'allMult', value: 5 },
-   { id: 'p_starforge', name: 'Starforge Core', icon: '&#11088;', desc: 'Stars gain x1.5', cost: 8, effect: 'starGain', value: 1.5 },
-   { id: 'p_eternity', name: 'Eternal Loop', icon: '&#9854;', desc: 'Keep 10% crystals on prestige', cost: 12, effect: 'prestigeCarry', value: 0.1 },
-   { id: 'p_overdrive', name: 'Overclock Reality', icon: '&#9889;', desc: 'All production x8', cost: 20, effect: 'allMult', value: 8 },
- ];
- 
--// Achievements
-+// 実績
- const ACHIEVEMENTS = [
-   { id: 'a_click1', name: 'First Tap', icon: '&#128073;', desc: 'Tap the crystal once', check: s => s.totalClicks >= 1, reward: { type: 'clickMult', value: 1.03, label: 'Tap power +3%' } },
-   { id: 'a_click10', name: 'Tapper', icon: '&#9995;', desc: 'Tap 100 times', check: s => s.totalClicks >= 100, reward: { type: 'clickMult', value: 1.05, label: 'Tap power +5%' } },
-   { id: 'a_click1k', name: 'Click Master', icon: '&#128170;', desc: 'Tap 1,000 times', check: s => s.totalClicks >= 1000, reward: { type: 'clickMult', value: 1.08, label: 'Tap power +8%' } },
-   { id: 'a_click10k', name: 'Click Legend', icon: '&#127942;', desc: 'Tap 10,000 times', check: s => s.totalClicks >= 10000, reward: { type: 'clickMult', value: 1.12, label: 'Tap power +12%' } },
-   { id: 'a_click100k', name: 'Click God', icon: '&#128293;', desc: 'Tap 100,000 times', check: s => s.totalClicks >= 100000, reward: { type: 'allMult', value: 1.25, label: 'All production +25%' } },
-   { id: 'a_click1m', name: 'Dimension Knuckle', icon: '&#129304;', desc: 'Tap 1,000,000 times', check: s => s.totalClicks >= 1e6, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
- 
-   { id: 'a_earn100', name: 'Collector', icon: '&#128142;', desc: 'Earn 100 crystals total', check: s => s.totalEarned >= 100, reward: { type: 'cpsMult', value: 1.03, label: 'Auto speed +3%' } },
-   { id: 'a_earn10k', name: 'Hoarder', icon: '&#128176;', desc: 'Earn 10K crystals total', check: s => s.totalEarned >= 10000, reward: { type: 'cpsMult', value: 1.06, label: 'Auto speed +6%' } },
-   { id: 'a_earn1m', name: 'Millionaire', icon: '&#127975;', desc: 'Earn 1M crystals total', check: s => s.totalEarned >= 1e6, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
-   { id: 'a_earn1b', name: 'Billionaire', icon: '&#127961;', desc: 'Earn 1B crystals total', check: s => s.totalEarned >= 1e9, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
-   { id: 'a_earn1t', name: 'Trillionaire', icon: '&#127756;', desc: 'Earn 1T crystals total', check: s => s.totalEarned >= 1e12, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
-   { id: 'a_earn1qa', name: 'Interstellar Bank', icon: '&#128640;', desc: 'Earn 1Qa crystals total', check: s => s.totalEarned >= 1e15, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
- 
-   { id: 'a_cps10', name: 'Automated', icon: '&#9881;', desc: 'Reach 10/s auto', check: s => s.cps >= 10, reward: { type: 'cpsMult', value: 1.05, label: 'Auto speed +5%' } },
-   { id: 'a_cps100', name: 'Factory', icon: '&#127981;', desc: 'Reach 100/s auto', check: s => s.cps >= 100, reward: { type: 'cpsMult', value: 1.08, label: 'Auto speed +8%' } },
-   { id: 'a_cps1k', name: 'Mass Production', icon: '&#128200;', desc: 'Reach 1K/s auto', check: s => s.cps >= 1000, reward: { type: 'cpsMult', value: 1.12, label: 'Auto speed +12%' } },
-   { id: 'a_cps10k', name: 'Crystal Empire', icon: '&#128081;', desc: 'Reach 10K/s auto', check: s => s.cps >= 10000, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
-   { id: 'a_cps100k', name: 'Crystal Universe', icon: '&#127752;', desc: 'Reach 100K/s auto', check: s => s.cps >= 100000, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
-   { id: 'a_cps10m', name: 'Galactic Industry', icon: '&#127756;', desc: 'Reach 10M/s auto', check: s => s.cps >= 1e7, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
- 
-   { id: 'a_prestige1', name: 'Reborn', icon: '&#11088;', desc: 'Prestige once', check: s => s.totalPrestiges >= 1, reward: { type: 'starGain', value: 1.05, label: 'Future star gain +5%' } },
-   { id: 'a_prestige5', name: 'Star Collector', icon: '&#127775;', desc: 'Prestige 5 times', check: s => s.totalPrestiges >= 5, reward: { type: 'starGain', value: 1.1, label: 'Future star gain +10%' } },
-   { id: 'a_prestige10', name: 'Star Master', icon: '&#128171;', desc: 'Prestige 10 times', check: s => s.totalPrestiges >= 10, reward: { type: 'starGain', value: 1.15, label: 'Future star gain +15%' } },
+  { id: 'dragon', name: 'Baby Dragon', icon: '&#128009;', desc: '+500/s', baseCost: 200000, costMult: 1.15, cps: 500, maxLv: 40, unlock: 50000 },
+  { id: 'phoenix', name: 'Phoenix', icon: '&#128038;', desc: '+2500/s', baseCost: 2e6, costMult: 1.15, cps: 2500, maxLv: 30, unlock: 500000 },
+  { id: 'titan', name: 'Ancient Titan', icon: '&#128122;', desc: '+15000/s', baseCost: 2.5e7, costMult: 1.15, cps: 15000, maxLv: 20, unlock: 5000000 },
+  { id: 'nebula', name: 'Nebula Core', icon: '&#127752;', desc: '+100000/s', baseCost: 5e8, costMult: 1.15, cps: 100000, maxLv: 15, unlock: 100000000 },
+  { id: 'forge', name: 'Astral Forge', icon: '&#127981;', desc: '+650000/s', baseCost: 8e9, costMult: 1.16, cps: 650000, maxLv: 12, unlock: 2e9 },
+  { id: 'rift', name: 'Rift Extractor', icon: '&#128301;', desc: '+3.5M/s', baseCost: 2e11, costMult: 1.17, cps: 3.5e6, maxLv: 10, unlock: 8e10 },
+  { id: 'chrono', name: 'Chrono Reactor', icon: '&#9201;', desc: '+20M/s', baseCost: 6e12, costMult: 1.18, cps: 2e7, maxLv: 8, unlock: 2e12 },
+  { id: 'singularity', name: 'Singularity Engine', icon: '&#128171;', desc: '+150M/s', baseCost: 3e14, costMult: 1.2, cps: 1.5e8, maxLv: 6, unlock: 1e14 },
+];
+
+// Prestige upgrades (bought with stars)
+const PRESTIGE_UPGRADES = [
+  { id: 'p_click', name: 'Starlit Fingers', icon: '&#11088;', desc: 'Tap power x2', cost: 1, effect: 'clickMult', value: 2 },
+  { id: 'p_cps', name: 'Cosmic Flow', icon: '&#127776;', desc: 'Auto speed x2', cost: 2, effect: 'cpsMult', value: 2 },
+  { id: 'p_cheap', name: 'Bargain Hunter', icon: '&#128176;', desc: 'Upgrades 15% cheaper', cost: 3, effect: 'costReduction', value: 0.85 },
+  { id: 'p_offline', name: 'Dream Mining', icon: '&#127769;', desc: 'Offline gains x2', cost: 2, effect: 'offlineMult', value: 2 },
+  { id: 'p_click2', name: 'Star Hammer', icon: '&#128296;', desc: 'Tap power x3', cost: 5, effect: 'clickMult', value: 3 },
+  { id: 'p_cps2', name: 'Galaxy Engine', icon: '&#128640;', desc: 'Auto speed x3', cost: 5, effect: 'cpsMult', value: 3 },
+  { id: 'p_start', name: 'Head Start', icon: '&#127939;', desc: 'Start with 1000 crystals per star', cost: 3, effect: 'headStart', value: 1000 },
+  { id: 'p_super', name: 'Supernova', icon: '&#128165;', desc: 'All production x5', cost: 10, effect: 'allMult', value: 5 },
+  { id: 'p_starforge', name: 'Starforge Core', icon: '&#11088;', desc: 'Stars gain x1.5', cost: 8, effect: 'starGain', value: 1.5 },
+  { id: 'p_eternity', name: 'Eternal Loop', icon: '&#9854;', desc: 'Keep 10% crystals on prestige', cost: 12, effect: 'prestigeCarry', value: 0.1 },
+  { id: 'p_overdrive', name: 'Overclock Reality', icon: '&#9889;', desc: 'All production x8', cost: 20, effect: 'allMult', value: 8 },
+];
+
+// 実績
+const ACHIEVEMENTS = [
+  { id: 'a_click1', name: 'First Tap', icon: '&#128073;', desc: 'Tap the crystal once', check: s => s.totalClicks >= 1, reward: { type: 'clickMult', value: 1.03, label: 'Tap power +3%' } },
+  { id: 'a_click10', name: 'Tapper', icon: '&#9995;', desc: 'Tap 100 times', check: s => s.totalClicks >= 100, reward: { type: 'clickMult', value: 1.05, label: 'Tap power +5%' } },
+  { id: 'a_click1k', name: 'Click Master', icon: '&#128170;', desc: 'Tap 1,000 times', check: s => s.totalClicks >= 1000, reward: { type: 'clickMult', value: 1.08, label: 'Tap power +8%' } },
+  { id: 'a_click10k', name: 'Click Legend', icon: '&#127942;', desc: 'Tap 10,000 times', check: s => s.totalClicks >= 10000, reward: { type: 'clickMult', value: 1.12, label: 'Tap power +12%' } },
+  { id: 'a_click100k', name: 'Click God', icon: '&#128293;', desc: 'Tap 100,000 times', check: s => s.totalClicks >= 100000, reward: { type: 'allMult', value: 1.25, label: 'All production +25%' } },
+  { id: 'a_click1m', name: 'Dimension Knuckle', icon: '&#129304;', desc: 'Tap 1,000,000 times', check: s => s.totalClicks >= 1e6, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
+
+  { id: 'a_earn100', name: 'Collector', icon: '&#128142;', desc: 'Earn 100 crystals total', check: s => s.totalEarned >= 100, reward: { type: 'cpsMult', value: 1.03, label: 'Auto speed +3%' } },
+  { id: 'a_earn10k', name: 'Hoarder', icon: '&#128176;', desc: 'Earn 10K crystals total', check: s => s.totalEarned >= 10000, reward: { type: 'cpsMult', value: 1.06, label: 'Auto speed +6%' } },
+  { id: 'a_earn1m', name: 'Millionaire', icon: '&#127975;', desc: 'Earn 1M crystals total', check: s => s.totalEarned >= 1e6, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
+  { id: 'a_earn1b', name: 'Billionaire', icon: '&#127961;', desc: 'Earn 1B crystals total', check: s => s.totalEarned >= 1e9, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
+  { id: 'a_earn1t', name: 'Trillionaire', icon: '&#127756;', desc: 'Earn 1T crystals total', check: s => s.totalEarned >= 1e12, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
+  { id: 'a_earn1qa', name: 'Interstellar Bank', icon: '&#128640;', desc: 'Earn 1Qa crystals total', check: s => s.totalEarned >= 1e15, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
+
+  { id: 'a_cps10', name: 'Automated', icon: '&#9881;', desc: 'Reach 10/s auto', check: s => s.cps >= 10, reward: { type: 'cpsMult', value: 1.05, label: 'Auto speed +5%' } },
+  { id: 'a_cps100', name: 'Factory', icon: '&#127981;', desc: 'Reach 100/s auto', check: s => s.cps >= 100, reward: { type: 'cpsMult', value: 1.08, label: 'Auto speed +8%' } },
+  { id: 'a_cps1k', name: 'Mass Production', icon: '&#128200;', desc: 'Reach 1K/s auto', check: s => s.cps >= 1000, reward: { type: 'cpsMult', value: 1.12, label: 'Auto speed +12%' } },
+  { id: 'a_cps10k', name: 'Crystal Empire', icon: '&#128081;', desc: 'Reach 10K/s auto', check: s => s.cps >= 10000, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
+  { id: 'a_cps100k', name: 'Crystal Universe', icon: '&#127752;', desc: 'Reach 100K/s auto', check: s => s.cps >= 100000, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
+  { id: 'a_cps10m', name: 'Galactic Industry', icon: '&#127756;', desc: 'Reach 10M/s auto', check: s => s.cps >= 1e7, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
+
+  { id: 'a_prestige1', name: 'Reborn', icon: '&#11088;', desc: 'Prestige once', check: s => s.totalPrestiges >= 1, reward: { type: 'starGain', value: 1.05, label: 'Future star gain +5%' } },
+  { id: 'a_prestige5', name: 'Star Collector', icon: '&#127775;', desc: 'Prestige 5 times', check: s => s.totalPrestiges >= 5, reward: { type: 'starGain', value: 1.1, label: 'Future star gain +10%' } },
+  { id: 'a_prestige10', name: 'Star Master', icon: '&#128171;', desc: 'Prestige 10 times', check: s => s.totalPrestiges >= 10, reward: { type: 'starGain', value: 1.15, label: 'Future star gain +15%' } },
 @@ -1042,55 +1066,56 @@ const ACHIEVEMENTS = [
- 
-   { id: 'a_upgrade1', name: 'First Upgrade', icon: '&#9650;', desc: 'Buy your first upgrade', check: s => s.totalUpgrades >= 1, reward: { type: 'costReduction', value: 0.99, label: 'Upgrade cost -1%' } },
-   { id: 'a_upgrade25', name: 'Upgrade Addict', icon: '&#128640;', desc: 'Buy 25 upgrades', check: s => s.totalUpgrades >= 25, reward: { type: 'costReduction', value: 0.97, label: 'Upgrade cost -3%' } },
-   { id: 'a_upgrade100', name: 'Max Upgrader', icon: '&#128171;', desc: 'Buy 100 upgrades', check: s => s.totalUpgrades >= 100, reward: { type: 'costReduction', value: 0.94, label: 'Upgrade cost -6%' } },
-   { id: 'a_upgrade300', name: 'Architect Prime', icon: '&#127959;', desc: 'Buy 300 upgrades', check: s => s.totalUpgrades >= 300, reward: { type: 'costReduction', value: 0.9, label: 'Upgrade cost -10%' } },
- ];
- 
- // ─── Game State ──────────────────────────────────────────
- let state = getDefaultState();
- 
- function getDefaultState() {
-   return {
-     crystals: 0,
-     totalEarned: 0,
-     totalClicks: 0,
-     totalUpgrades: 0,
-     clickPower: 1,
-     cps: 0,
-     // Upgrade levels
-     clickLevels: {},
-     autoLevels: {},
-     // Prestige
-     stars: 0,
-     totalPrestiges: 0,
-     prestigeUpgrades: [],
--    // Achievements
-+    // 実績
-     unlockedAchievements: [],
-     // Settings
-     soundEnabled: true,
-     particlesEnabled: true,
-+    buyAmount: 10,
-     // Timestamps
-     lastSave: Date.now(),
-     lastOnline: Date.now(),
-     // Stats
-     totalTimePlayed: 0,
-     bestCps: 0,
-     bestClickPower: 0,
-   };
- }
- 
- // ─── Computed Values ─────────────────────────────────────
- function getPrestigeMultipliers() {
-   let clickMult = 1, cpsMult = 1, costReduction = 1, offlineMult = 1, headStart = 0, allMult = 1, starGain = 1, prestigeCarry = 0;
-   for (const pid of state.prestigeUpgrades) {
-     const pu = PRESTIGE_UPGRADES.find(p => p.id === pid);
-     if (!pu) continue;
-     switch (pu.effect) {
-       case 'clickMult': clickMult *= pu.value; break;
-       case 'cpsMult': cpsMult *= pu.value; break;
-       case 'costReduction': costReduction *= pu.value; break;
-       case 'offlineMult': offlineMult *= pu.value; break;
-       case 'headStart': headStart += pu.value * state.stars; break;
-       case 'allMult': allMult *= pu.value; break;
-       case 'starGain': starGain *= pu.value; break;
-       case 'prestigeCarry': prestigeCarry += pu.value; break;
+
+  { id: 'a_upgrade1', name: 'First Upgrade', icon: '&#9650;', desc: 'Buy your first upgrade', check: s => s.totalUpgrades >= 1, reward: { type: 'costReduction', value: 0.99, label: 'Upgrade cost -1%' } },
+  { id: 'a_upgrade25', name: 'Upgrade Addict', icon: '&#128640;', desc: 'Buy 25 upgrades', check: s => s.totalUpgrades >= 25, reward: { type: 'costReduction', value: 0.97, label: 'Upgrade cost -3%' } },
+  { id: 'a_upgrade100', name: 'Max Upgrader', icon: '&#128171;', desc: 'Buy 100 upgrades', check: s => s.totalUpgrades >= 100, reward: { type: 'costReduction', value: 0.94, label: 'Upgrade cost -6%' } },
+  { id: 'a_upgrade300', name: 'Architect Prime', icon: '&#127959;', desc: 'Buy 300 upgrades', check: s => s.totalUpgrades >= 300, reward: { type: 'costReduction', value: 0.9, label: 'Upgrade cost -10%' } },
+];
+
+// ─── Game State ──────────────────────────────────────────
+let state = getDefaultState();
+
+function getDefaultState() {
+  return {
+    crystals: 0,
+    totalEarned: 0,
+    totalClicks: 0,
+    totalUpgrades: 0,
+    clickPower: 1,
+    cps: 0,
+    // Upgrade levels
+    clickLevels: {},
+    autoLevels: {},
+    // Prestige
+    stars: 0,
+    totalPrestiges: 0,
+    prestigeUpgrades: [],
+    // 実績
+    unlockedAchievements: [],
+    // Settings
+    soundEnabled: true,
+    particlesEnabled: true,
+    buyAmount: 10,
+    // Timestamps
+    lastSave: Date.now(),
+    lastOnline: Date.now(),
+    // Stats
+    totalTimePlayed: 0,
+    bestCps: 0,
+    bestClickPower: 0,
+  };
+}
+
+// ─── Computed Values ─────────────────────────────────────
+function getPrestigeMultipliers() {
+  let clickMult = 1, cpsMult = 1, costReduction = 1, offlineMult = 1, headStart = 0, allMult = 1, starGain = 1, prestigeCarry = 0;
+  for (const pid of state.prestigeUpgrades) {
+    const pu = PRESTIGE_UPGRADES.find(p => p.id === pid);
+    if (!pu) continue;
+    switch (pu.effect) {
+      case 'clickMult': clickMult *= pu.value; break;
+      case 'cpsMult': cpsMult *= pu.value; break;
+      case 'costReduction': costReduction *= pu.value; break;
+      case 'offlineMult': offlineMult *= pu.value; break;
+      case 'headStart': headStart += pu.value * state.stars; break;
+      case 'allMult': allMult *= pu.value; break;
+      case 'starGain': starGain *= pu.value; break;
+      case 'prestigeCarry': prestigeCarry += pu.value; break;
 @@ -1121,51 +1146,52 @@ function getAchievementBoosts() {
-   for (const id of state.unlockedAchievements) {
-     const achievement = ACHIEVEMENTS.find(a => a.id === id);
-     if (!achievement || !achievement.reward) continue;
-     const { type, value } = achievement.reward;
-     if (type in boosts) boosts[type] *= value;
-   }
- 
-   return boosts;
- }
- 
- function calcClickPower() {
-   let base = 1;
-   for (const u of CLICK_UPGRADES) {
-     const lv = state.clickLevels[u.id] || 0;
-     base += u.power * lv;
-   }
-   const m = getPrestigeMultipliers();
-   const a = getAchievementBoosts();
-   return Math.floor(base * m.clickMult * a.clickMult * a.allMult);
- }
- 
- function calcCPS() {
-   let base = 0;
-   for (const u of AUTO_UPGRADES) {
-     const lv = state.autoLevels[u.id] || 0;
--    base += u.cps * lv;
-+    const facilityBonus = 1 + Math.floor(lv / 25) * 0.25;
-+    base += u.cps * lv * facilityBonus;
-   }
-   const m = getPrestigeMultipliers();
-   const a = getAchievementBoosts();
-   return Math.floor(base * m.cpsMult * a.cpsMult * a.allMult);
- }
- 
- function calcUpgradeCost(baseCost, costMult, level) {
-   const m = getPrestigeMultipliers();
-   const a = getAchievementBoosts();
-   return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction * a.costReduction);
- }
- 
- function calcPrestigeStars() {
-   // Stars earned based on total crystals earned this run
-   const m = getPrestigeMultipliers();
-   const a = getAchievementBoosts();
-   return Math.floor(Math.pow(state.totalEarned / 1e6, 0.5) * m.starGain * a.starGain);
- }
- 
- // ─── DOM References ──────────────────────────────────────
- const $ = id => document.getElementById(id);
- const crystalCountEl = $('crystal-count');
- const cpsDisplayEl = $('cps-display');
- const prestigeDisplayEl = $('prestige-display');
- const crystalBtn = $('crystal-btn');
+  for (const id of state.unlockedAchievements) {
+    const achievement = ACHIEVEMENTS.find(a => a.id === id);
+    if (!achievement || !achievement.reward) continue;
+    const { type, value } = achievement.reward;
+    if (type in boosts) boosts[type] *= value;
+  }
+
+  return boosts;
+}
+
+function calcClickPower() {
+  let base = 1;
+  for (const u of CLICK_UPGRADES) {
+    const lv = state.clickLevels[u.id] || 0;
+    base += u.power * lv;
+  }
+  const m = getPrestigeMultipliers();
+  const a = getAchievementBoosts();
+  return Math.floor(base * m.clickMult * a.clickMult * a.allMult);
+}
+
+function calcCPS() {
+  let base = 0;
+  for (const u of AUTO_UPGRADES) {
+    const lv = state.autoLevels[u.id] || 0;
+    const facilityBonus = 1 + Math.floor(lv / 25) * 0.25;
+    base += u.cps * lv * facilityBonus;
+  }
+  const m = getPrestigeMultipliers();
+  const a = getAchievementBoosts();
+  return Math.floor(base * m.cpsMult * a.cpsMult * a.allMult);
+}
+
+function calcUpgradeCost(baseCost, costMult, level) {
+  const m = getPrestigeMultipliers();
+  const a = getAchievementBoosts();
+  return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction * a.costReduction);
+}
+
+function calcPrestigeStars() {
+  // Stars earned based on total crystals earned this run
+  const m = getPrestigeMultipliers();
+  const a = getAchievementBoosts();
+  return Math.floor(Math.pow(state.totalEarned / 1e6, 0.5) * m.starGain * a.starGain);
+}
+
+// ─── DOM References ──────────────────────────────────────
+const $ = id => document.getElementById(id);
+const crystalCountEl = $('crystal-count');
+const cpsDisplayEl = $('cps-display');
+const prestigeDisplayEl = $('prestige-display');
+const crystalBtn = $('crystal-btn');
 @@ -1266,529 +1292,570 @@ function spawnParticles(x, y, count) {
- }
- 
- // ─── Toast Notification ──────────────────────────────────
- let toastTimer = null;
- function showToast(icon, text) {
-   toastIcon.innerHTML = icon;
-   toastText.textContent = text;
-   toastEl.classList.add('show');
-   clearTimeout(toastTimer);
-   toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
- }
- 
- // ─── Modal ───────────────────────────────────────────────
- function showModal(title, text, reward) {
-   modalTitle.textContent = title;
-   modalText.innerHTML = text;
-   modalReward.textContent = reward || '';
-   modalOverlay.classList.add('show');
- }
- 
- modalBtn.addEventListener('click', () => modalOverlay.classList.remove('show'));
- modalOverlay.addEventListener('click', (e) => {
-   if (e.target === modalOverlay) modalOverlay.classList.remove('show');
- });
- 
-+function getBuyAmountLabel(amount) {
-+  return amount === 'max' ? '全購入' : `${amount}個`;
-+}
-+
-+function renderBuyAmountSelector() {
-+  return `<div class="buy-amount-selector">${BUY_AMOUNTS.map(amount => `<button class="buy-amount-btn ${state.buyAmount === amount ? 'active' : ''}" data-buy-amount="${amount}">${getBuyAmountLabel(amount)}</button>`).join('')}</div>`;
-+}
-+
-+function bindBuyAmountSelector(panel) {
-+  panel.querySelectorAll('.buy-amount-btn').forEach(btn => {
-+    btn.addEventListener('click', (e) => {
-+      e.stopPropagation();
-+      state.buyAmount = btn.dataset.buyAmount === 'max' ? 'max' : Number(btn.dataset.buyAmount);
-+      renderTab(activeTab);
-+    });
-+  });
-+}
-+
-+function calcBulkBuyResult(upgrade, level, amount) {
-+  const maxPurchases = amount === 'max' ? (upgrade.maxLv - level) : Math.min(amount, upgrade.maxLv - level);
-+  let totalCost = 0;
-+  let purchased = 0;
-+
-+  for (let i = 0; i < maxPurchases; i++) {
-+    const nextLv = level + i;
-+    const price = calcUpgradeCost(upgrade.baseCost, upgrade.costMult, nextLv);
-+    if (state.crystals < totalCost + price) break;
-+    totalCost += price;
-+    purchased++;
-+  }
-+
-+  return { totalCost, purchased };
-+}
-+
- // ─── Render Upgrades Tab ─────────────────────────────────
- function renderUpgrades() {
-   const panel = $('panel-upgrades');
--  let html = '<div class="section-title">Tap Power</div>';
-+  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector();
- 
-   for (const u of CLICK_UPGRADES) {
-     const lv = state.clickLevels[u.id] || 0;
-     const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
-     const maxed = lv >= u.maxLv;
-     const affordable = state.crystals >= cost && !maxed;
-     const unlocked = !u.unlock || state.totalEarned >= u.unlock;
-     const progress = Math.min(state.crystals / cost * 100, 100);
- 
-     if (!unlocked) {
-       html += `<div class="upgrade-card locked">
-         <div class="upgrade-icon">${u.icon}</div>
-         <div class="upgrade-info">
-           <div class="upgrade-name">???</div>
--          <div class="upgrade-desc">Earn ${formatNum(u.unlock)} total to unlock</div>
-+          <div class="upgrade-desc">累計${formatNum(u.unlock)}で解放</div>
-         </div>
-       </div>`;
-       continue;
-     }
- 
-     html += `<div class="upgrade-card ${affordable ? 'affordable' : ''} ${maxed ? 'max-level' : ''}"
-       data-type="click" data-id="${u.id}">
-       <div class="upgrade-icon">${u.icon}</div>
-       <div class="upgrade-info">
-         <div class="upgrade-name">${u.name}</div>
-         <div class="upgrade-desc">${u.desc}</div>
--        <div class="upgrade-effect">+${formatNum(u.power)} per tap</div>
-+        <div class="upgrade-effect">1タップ +${formatNum(u.power)}</div>
-       </div>
-       <div class="upgrade-right">
--        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">MAX</div>' :
-+        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
-           `<div class="upgrade-cost">${formatNum(cost)}</div>`}
-         <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
-       </div>
-       ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
-     </div>`;
-   }
- 
-   panel.innerHTML = html;
-+  bindBuyAmountSelector(panel);
- 
-   // Bind click events
-   panel.querySelectorAll('.upgrade-card[data-type="click"]').forEach(card => {
-     card.addEventListener('click', () => buyClickUpgrade(card.dataset.id));
-   });
- }
- 
- function renderAuto() {
-   const panel = $('panel-auto');
--  let html = '<div class="section-title">Auto Generators</div>';
-+  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25%</div>';
- 
-   for (const u of AUTO_UPGRADES) {
-     const lv = state.autoLevels[u.id] || 0;
-     const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
-     const maxed = lv >= u.maxLv;
-     const affordable = state.crystals >= cost && !maxed;
-     const unlocked = !u.unlock || state.totalEarned >= u.unlock;
-     const progress = Math.min(state.crystals / cost * 100, 100);
- 
-     if (!unlocked) {
-       html += `<div class="upgrade-card locked">
-         <div class="upgrade-icon">${u.icon}</div>
-         <div class="upgrade-info">
-           <div class="upgrade-name">???</div>
--          <div class="upgrade-desc">Earn ${formatNum(u.unlock)} total to unlock</div>
-+          <div class="upgrade-desc">累計${formatNum(u.unlock)}で解放</div>
-         </div>
-       </div>`;
-       continue;
-     }
- 
--    const totalCps = u.cps * lv;
-+    const facilityBonus = 1 + Math.floor(lv / 25) * 0.25;
-+    const totalCps = u.cps * lv * facilityBonus;
-     html += `<div class="upgrade-card ${affordable ? 'affordable' : ''} ${maxed ? 'max-level' : ''}"
-       data-type="auto" data-id="${u.id}">
-       <div class="upgrade-icon">${u.icon}</div>
-       <div class="upgrade-info">
-         <div class="upgrade-name">${u.name}</div>
--        <div class="upgrade-desc">${u.desc}</div>
--        <div class="upgrade-effect">${lv > 0 ? `Total: +${formatNum(totalCps)}/s` : 'Not owned'}</div>
-+        <div class="upgrade-desc">${u.desc}（25個ごとに+25%）</div>
-+        <div class="upgrade-effect">${lv > 0 ? `合計: +${formatNum(totalCps)}/秒` : '未所持'}</div>
-       </div>
-       <div class="upgrade-right">
--        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">MAX</div>' :
-+        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
-           `<div class="upgrade-cost">${formatNum(cost)}</div>`}
-         <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
-       </div>
-       ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
-     </div>`;
-   }
- 
-   panel.innerHTML = html;
-+  bindBuyAmountSelector(panel);
- 
-   panel.querySelectorAll('.upgrade-card[data-type="auto"]').forEach(card => {
-     card.addEventListener('click', () => buyAutoUpgrade(card.dataset.id));
-   });
- }
- 
- function renderPrestige() {
-   const panel = $('panel-prestige');
-   const potentialStars = calcPrestigeStars();
-   const newStars = Math.max(0, potentialStars - 0); // stars earned this prestige
-   const m = getPrestigeMultipliers();
-   const currentBonus = Math.floor((1 + state.stars * 0.05) * 100 - 100);
- 
-   let html = `<div class="prestige-panel">
-     <div class="prestige-info-box">
-       <div class="prestige-stars">${state.stars} &#11088;</div>
--      <div class="prestige-stars-label">Prestige Stars</div>
--      <div class="prestige-bonus">Current bonus: +${currentBonus}% all production</div>
-+      <div class="prestige-stars-label">転生スター</div>
-+      <div class="prestige-bonus">現在のボーナス: 全生産 +${currentBonus}%</div>
-       <div class="prestige-next">
--        Prestige now for <strong>+${newStars} &#11088;</strong><br>
--        <small>(Need ${formatNum(1e6)} total earned for first star)</small><br>
--        <small>Carry over: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> crystals</small>
-+        今すぐ転生で <strong>+${newStars} &#11088;</strong><br>
-+        <small>(最初の星は累計${formatNum(1e6)}で獲得)</small><br>
-+        <small>持ち越し: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> クリスタル</small>
-       </div>
-       <button class="prestige-btn" id="prestige-btn" ${newStars < 1 ? 'disabled' : ''}>
--        &#11088; Prestige (+${newStars} stars)
-+        &#11088; 転生 (+${newStars} 星)
-       </button>
-     </div>
- 
--    <div class="section-title">Star Upgrades</div>`;
-+    <div class="section-title">スター強化</div>`;
- 
-   for (const pu of PRESTIGE_UPGRADES) {
-     const purchased = state.prestigeUpgrades.includes(pu.id);
-     const affordable = state.stars >= pu.cost && !purchased;
-     html += `<div class="prestige-upgrade-card ${affordable ? 'affordable' : ''} ${purchased ? 'purchased' : ''}"
-       data-id="${pu.id}">
-       <div class="upgrade-icon" style="background:rgba(251,191,36,0.15);">${pu.icon}</div>
-       <div class="upgrade-info">
-         <div class="upgrade-name">${pu.name}</div>
-         <div class="upgrade-desc">${pu.desc}</div>
-       </div>
-       <div class="upgrade-right">
-         <div class="upgrade-cost" style="color:var(--gold);">${purchased ? '&#10003;' : pu.cost + ' &#11088;'}</div>
-       </div>
-     </div>`;
-   }
- 
-   html += '</div>';
-   panel.innerHTML = html;
- 
-   // Prestige button
-   const prestigeBtn = $('prestige-btn');
-   if (prestigeBtn) {
-     prestigeBtn.addEventListener('click', () => doPrestige(newStars));
-   }
- 
-   // Prestige upgrade clicks
-   panel.querySelectorAll('.prestige-upgrade-card:not(.purchased)').forEach(card => {
-     card.addEventListener('click', () => buyPrestigeUpgrade(card.dataset.id));
-   });
- }
- 
- function renderAchievements() {
-   const panel = $('panel-achievements');
-   const unlocked = state.unlockedAchievements.length;
-   const total = ACHIEVEMENTS.length;
- 
--  let html = `<div class="section-title">Achievements (${unlocked}/${total})</div>`;
-+  let html = `<div class="section-title">実績 (${unlocked}/${total})</div>`;
- 
-   for (const a of ACHIEVEMENTS) {
-     const isUnlocked = state.unlockedAchievements.includes(a.id);
-     html += `<div class="achievement-card ${isUnlocked ? 'unlocked' : 'locked'}">
-       <div class="achievement-icon">${isUnlocked ? a.icon : '&#128274;'}</div>
-       <div class="achievement-info">
-         <div class="achievement-name">${isUnlocked ? a.name : '???'}</div>
-         <div class="achievement-desc">${a.desc}</div>
-         ${a.reward ? `<div class="achievement-reward">${isUnlocked ? '&#10003; ' : ''}${getAchievementRewardText(a.reward)}</div>` : ''}
-       </div>
-     </div>`;
-   }
- 
-   panel.innerHTML = html;
- }
- 
- function renderSettings() {
-   const panel = $('panel-settings');
-   const achievementBoosts = getAchievementBoosts();
- 
-   panel.innerHTML = `
--    <div class="section-title">Settings</div>
-+    <div class="section-title">設定</div>
-     <div class="settings-group">
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Sound Effects</div>
-+          <div class="settings-label">効果音</div>
-         </div>
-         <button class="toggle-switch ${state.soundEnabled ? 'active' : ''}" id="toggle-sound"></button>
-       </div>
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Particles</div>
-+          <div class="settings-label">パーティクル</div>
-         </div>
-         <button class="toggle-switch ${state.particlesEnabled ? 'active' : ''}" id="toggle-particles"></button>
-       </div>
-     </div>
- 
--    <div class="section-title">Save Data</div>
-+    <div class="section-title">セーブデータ</div>
-     <div class="settings-group">
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Manual Save</div>
--          <div class="settings-sublabel">Auto saves every 30s</div>
-+          <div class="settings-label">手動セーブ</div>
-+          <div class="settings-sublabel">30秒ごとに自動セーブ</div>
-         </div>
--        <button class="settings-btn" id="btn-save">Save</button>
-+        <button class="settings-btn" id="btn-save">保存</button>
-       </div>
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Export Save</div>
--          <div class="settings-sublabel">Copy save data to clipboard</div>
-+          <div class="settings-label">セーブを書き出し</div>
-+          <div class="settings-sublabel">セーブデータをコピー</div>
-         </div>
--        <button class="settings-btn" id="btn-export">Export</button>
-+        <button class="settings-btn" id="btn-export">書き出し</button>
-       </div>
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Import Save</div>
--          <div class="settings-sublabel">Paste save data to restore</div>
-+          <div class="settings-label">セーブを読み込み</div>
-+          <div class="settings-sublabel">貼り付けて復元</div>
-         </div>
--        <button class="settings-btn" id="btn-import">Import</button>
-+        <button class="settings-btn" id="btn-import">読み込み</button>
-       </div>
-       <div class="settings-item">
-         <div>
--          <div class="settings-label">Reset All Data</div>
--          <div class="settings-sublabel">Warning: Cannot be undone!</div>
-+          <div class="settings-label">全データリセット</div>
-+          <div class="settings-sublabel">注意: 元に戻せません</div>
-         </div>
--        <button class="settings-btn danger" id="btn-reset">Reset</button>
-+        <button class="settings-btn danger" id="btn-reset">リセット</button>
-       </div>
-     </div>
- 
--    <div class="section-title">Stats</div>
-+    <div class="section-title">統計</div>
-     <div class="settings-group" style="padding:8px 16px;">
--      <div class="stat-row"><span class="stat-label">Total Clicks</span><span class="stat-value">${formatNum(state.totalClicks)}</span></div>
--      <div class="stat-row"><span class="stat-label">Total Earned</span><span class="stat-value">${formatNum(state.totalEarned)}</span></div>
--      <div class="stat-row"><span class="stat-label">Click Power</span><span class="stat-value">${formatNum(calcClickPower())}</span></div>
--      <div class="stat-row"><span class="stat-label">Auto CPS</span><span class="stat-value">${formatNum(calcCPS())}/s</span></div>
--      <div class="stat-row"><span class="stat-label">Prestige Stars</span><span class="stat-value">${state.stars} &#11088;</span></div>
--      <div class="stat-row"><span class="stat-label">Total Prestiges</span><span class="stat-value">${state.totalPrestiges}</span></div>
--      <div class="stat-row"><span class="stat-label">Star Bonus</span><span class="stat-value">+${Math.floor(state.stars * 5)}%</span></div>
--      <div class="stat-row"><span class="stat-label">Upgrades Bought</span><span class="stat-value">${state.totalUpgrades}</span></div>
--      <div class="stat-row"><span class="stat-label">Achievements</span><span class="stat-value">${state.unlockedAchievements.length}/${ACHIEVEMENTS.length}</span></div>
--      <div class="stat-row"><span class="stat-label">Achievement Prod Boost</span><span class="stat-value">+${formatPercent(achievementBoosts.allMult)}</span></div>
--      <div class="stat-row"><span class="stat-label">Achievement Star Boost</span><span class="stat-value">+${formatPercent(achievementBoosts.starGain)}</span></div>
--      <div class="stat-row"><span class="stat-label">Time Played</span><span class="stat-value">${formatTime(state.totalTimePlayed)}</span></div>
--      <div class="stat-row" style="border:none;"><span class="stat-label">Best CPS</span><span class="stat-value">${formatNum(state.bestCps)}/s</span></div>
-+      <div class="stat-row"><span class="stat-label">総タップ数</span><span class="stat-value">${formatNum(state.totalClicks)}</span></div>
-+      <div class="stat-row"><span class="stat-label">累計獲得</span><span class="stat-value">${formatNum(state.totalEarned)}</span></div>
-+      <div class="stat-row"><span class="stat-label">タップ威力</span><span class="stat-value">${formatNum(calcClickPower())}</span></div>
-+      <div class="stat-row"><span class="stat-label">施設CPS</span><span class="stat-value">${formatNum(calcCPS())}/s</span></div>
-+      <div class="stat-row"><span class="stat-label">転生スター</span><span class="stat-value">${state.stars} &#11088;</span></div>
-+      <div class="stat-row"><span class="stat-label">転生回数</span><span class="stat-value">${state.totalPrestiges}</span></div>
-+      <div class="stat-row"><span class="stat-label">星ボーナス</span><span class="stat-value">+${Math.floor(state.stars * 5)}%</span></div>
-+      <div class="stat-row"><span class="stat-label">購入強化数</span><span class="stat-value">${state.totalUpgrades}</span></div>
-+      <div class="stat-row"><span class="stat-label">実績</span><span class="stat-value">${state.unlockedAchievements.length}/${ACHIEVEMENTS.length}</span></div>
-+      <div class="stat-row"><span class="stat-label">実績生産ボーナス</span><span class="stat-value">+${formatPercent(achievementBoosts.allMult)}</span></div>
-+      <div class="stat-row"><span class="stat-label">実績スター倍率</span><span class="stat-value">+${formatPercent(achievementBoosts.starGain)}</span></div>
-+      <div class="stat-row"><span class="stat-label">プレイ時間</span><span class="stat-value">${formatTime(state.totalTimePlayed)}</span></div>
-+      <div class="stat-row" style="border:none;"><span class="stat-label">最高CPS</span><span class="stat-value">${formatNum(state.bestCps)}/s</span></div>
-     </div>
-   `;
- 
-   // Settings event listeners
-   $('toggle-sound').addEventListener('click', () => {
-     state.soundEnabled = !state.soundEnabled;
-     AudioEngine.enabled = state.soundEnabled;
-     renderSettings();
-   });
- 
-   $('toggle-particles').addEventListener('click', () => {
-     state.particlesEnabled = !state.particlesEnabled;
-     renderSettings();
-   });
- 
-   $('btn-save').addEventListener('click', () => {
-     saveGame();
--    showToast('&#128190;', 'Game saved!');
-+    showToast('&#128190;', 'セーブしました');
-   });
- 
-   $('btn-export').addEventListener('click', exportSave);
-   $('btn-import').addEventListener('click', importSave);
-   $('btn-reset').addEventListener('click', resetGame);
- }
- 
- function renderTab(tab) {
-   switch (tab) {
-     case 'upgrades': renderUpgrades(); break;
-     case 'auto': renderAuto(); break;
-     case 'prestige': renderPrestige(); break;
-     case 'achievements': renderAchievements(); break;
-     case 'settings': renderSettings(); break;
-   }
- }
- 
- // ─── Buy Logic ───────────────────────────────────────────
- function buyClickUpgrade(id) {
-   const u = CLICK_UPGRADES.find(u => u.id === id);
-   if (!u) return;
-   const lv = state.clickLevels[u.id] || 0;
-   if (lv >= u.maxLv) return;
--  const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
--  if (state.crystals < cost) {
-+
-+  const result = calcBulkBuyResult(u, lv, state.buyAmount);
-+  if (result.purchased < 1) {
-     AudioEngine.error();
-     return;
-   }
--  state.crystals -= cost;
--  state.clickLevels[u.id] = lv + 1;
--  state.totalUpgrades++;
-+
-+  state.crystals -= result.totalCost;
-+  state.clickLevels[u.id] = lv + result.purchased;
-+  state.totalUpgrades += result.purchased;
-   AudioEngine.buy();
-   updateDisplay();
-   renderUpgrades();
-   checkAchievements();
- }
- 
- function buyAutoUpgrade(id) {
-   const u = AUTO_UPGRADES.find(u => u.id === id);
-   if (!u) return;
-   const lv = state.autoLevels[u.id] || 0;
-   if (lv >= u.maxLv) return;
--  const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
--  if (state.crystals < cost) {
-+
-+  const result = calcBulkBuyResult(u, lv, state.buyAmount);
-+  if (result.purchased < 1) {
-     AudioEngine.error();
-     return;
-   }
--  state.crystals -= cost;
--  state.autoLevels[u.id] = lv + 1;
--  state.totalUpgrades++;
-+
-+  state.crystals -= result.totalCost;
-+  state.autoLevels[u.id] = lv + result.purchased;
-+  state.totalUpgrades += result.purchased;
-   AudioEngine.buy();
-   updateDisplay();
-   renderAuto();
-   checkAchievements();
- }
- 
- function buyPrestigeUpgrade(id) {
-   const pu = PRESTIGE_UPGRADES.find(p => p.id === id);
-   if (!pu) return;
-   if (state.prestigeUpgrades.includes(id)) return;
-   if (state.stars < pu.cost) {
-     AudioEngine.error();
-     return;
-   }
-   state.stars -= pu.cost;
-   state.prestigeUpgrades.push(id);
-   AudioEngine.buy();
-   updateDisplay();
-   renderPrestige();
- }
- 
- function doPrestige(newStars) {
-   if (newStars < 1) return;
- 
-   const m = getPrestigeMultipliers();
-   const carryCrystal = Math.floor(state.crystals * m.prestigeCarry);
- 
--  if (!confirm(`Prestige for +${newStars} stars?\nAll crystals and upgrades will be reset, but you keep stars and star upgrades.`)) return;
-+  if (!confirm(`+${newStars}星で転生しますか？\nクリスタルと通常強化はリセットされますが、星とスター強化は保持されます。`)) return;
- 
-   state.stars += newStars;
-   state.totalPrestiges++;
- 
-   // Reset progress but keep prestige data
-   const keepStars = state.stars;
-   const keepPrestiges = state.totalPrestiges;
-   const keepPrestigeUpgrades = [...state.prestigeUpgrades];
-   const keepAchievements = [...state.unlockedAchievements];
-   const keepSettings = { sound: state.soundEnabled, particles: state.particlesEnabled };
-   const keepStats = {
-     totalClicks: state.totalClicks,
-     totalUpgrades: state.totalUpgrades,
-     totalTimePlayed: state.totalTimePlayed,
-     bestCps: Math.max(state.bestCps, calcCPS()),
-     bestClickPower: Math.max(state.bestClickPower, calcClickPower()),
-   };
- 
-   // Reset
-   state = getDefaultState();
-   state.stars = keepStars;
-   state.totalPrestiges = keepPrestiges;
-   state.prestigeUpgrades = keepPrestigeUpgrades;
-   state.unlockedAchievements = keepAchievements;
-   state.soundEnabled = keepSettings.sound;
-   state.particlesEnabled = keepSettings.particles;
-   state.totalClicks = keepStats.totalClicks;
-   state.totalUpgrades = keepStats.totalUpgrades;
-   state.totalTimePlayed = keepStats.totalTimePlayed;
-   state.bestCps = keepStats.bestCps;
-   state.bestClickPower = keepStats.bestClickPower;
- 
-   // Head start
-   if (m.headStart > 0) {
-     state.crystals = m.headStart;
-     state.totalEarned = m.headStart;
-   }
- 
-   if (carryCrystal > 0) {
-     state.crystals += carryCrystal;
-     state.totalEarned += carryCrystal;
-   }
- 
-   AudioEngine.prestige();
--  showToast('&#11088;', `Prestige! +${newStars} stars!`);
-+  showToast('&#11088;', `転生完了！ +${newStars}星`);
- 
-   updateDisplay();
-   renderTab(activeTab);
-   saveGame();
- }
- 
--// ─── Achievements ────────────────────────────────────────
-+// ─── 実績 ────────────────────────────────────────
- function checkAchievements() {
-   const checkState = {
-     totalClicks: state.totalClicks,
-     totalEarned: state.totalEarned,
-     cps: calcCPS(),
-     totalPrestiges: state.totalPrestiges,
-     totalUpgrades: state.totalUpgrades,
-   };
- 
-   for (const a of ACHIEVEMENTS) {
-     if (state.unlockedAchievements.includes(a.id)) continue;
-     if (a.check(checkState)) {
-       state.unlockedAchievements.push(a.id);
-       AudioEngine.achievement();
-       const rewardText = a.reward ? ` (${getAchievementRewardText(a.reward)})` : '';
--      showToast(a.icon, a.name + ' unlocked!' + rewardText);
-+      showToast(a.icon, a.name + ' を達成！' + rewardText);
- 
-       // Update achievements badge
-       updateBadges();
-     }
-   }
- }
- 
- function updateBadges() {
-   // Check for affordable upgrades
-   let hasAffordableClick = false;
-   for (const u of CLICK_UPGRADES) {
-     const lv = state.clickLevels[u.id] || 0;
-     if (lv >= u.maxLv) continue;
-     const unlocked = !u.unlock || state.totalEarned >= u.unlock;
-     if (!unlocked) continue;
-     if (state.crystals >= calcUpgradeCost(u.baseCost, u.costMult, lv)) {
-       hasAffordableClick = true;
-       break;
-     }
-   }
- 
-   let hasAffordableAuto = false;
-   for (const u of AUTO_UPGRADES) {
-     const lv = state.autoLevels[u.id] || 0;
-     if (lv >= u.maxLv) continue;
-     const unlocked = !u.unlock || state.totalEarned >= u.unlock;
-     if (!unlocked) continue;
-     if (state.crystals >= calcUpgradeCost(u.baseCost, u.costMult, lv)) {
-       hasAffordableAuto = true;
-       break;
-     }
-   }
- 
-   const canPrestige = calcPrestigeStars() > 0;
- 
-   $('badge-upgrades').classList.toggle('show', hasAffordableClick);
-   $('badge-auto').classList.toggle('show', hasAffordableAuto);
-   $('badge-prestige').classList.toggle('show', canPrestige);
- }
- 
- // ─── Display Update ──────────────────────────────────────
- function updateDisplay() {
-   const cp = calcClickPower();
-   const cps = calcCPS();
- 
-   state.clickPower = cp;
-   state.cps = cps;
-   state.bestCps = Math.max(state.bestCps, cps);
- 
-   crystalCountEl.textContent = formatNum(state.crystals);
--  cpsDisplayEl.textContent = `${formatNum(cps)} crystals / sec`;
-+  cpsDisplayEl.textContent = `${formatNum(cps)} クリスタル / 秒`;
-   clickPowerLabel.innerHTML = `+${formatNum(cp)}`;
-   headerCps.textContent = `${formatNum(cps)}/s`;
--  headerClicks.textContent = `${formatNum(state.totalClicks)} tap`;
-+  headerClicks.textContent = `${formatNum(state.totalClicks)} タップ`;
- 
-   if (state.stars > 0) {
--    prestigeDisplayEl.innerHTML = `&#11088; ${state.stars} stars (+${Math.floor(state.stars * 5)}% bonus)`;
-+    prestigeDisplayEl.innerHTML = `&#11088; ${state.stars} 星 (+${Math.floor(state.stars * 5)}% ボーナス)`;
-   } else {
-     prestigeDisplayEl.textContent = '';
-   }
- 
-   updateBadges();
- }
- 
- // ─── Game Loop ───────────────────────────────────────────
- let lastTick = Date.now();
- 
- function gameTick() {
-   const now = Date.now();
-   const dt = (now - lastTick) / 1000;
-   lastTick = now;
- 
--  // Auto CPS
-+  // 施設CPS
-   const cps = calcCPS();
-   if (cps > 0) {
-     const earned = cps * dt;
-     state.crystals += earned;
-     state.totalEarned += earned;
-   }
- 
-   state.totalTimePlayed += dt;
- 
-   updateDisplay();
- 
-   // Re-render active tab periodically for progress bars
-   if (activeTab === 'upgrades' || activeTab === 'auto') {
-     renderTab(activeTab);
-   }
- 
-   checkAchievements();
- }
- 
- // Run game loop at ~4 ticks per second for smooth updates without battery drain
- setInterval(gameTick, 250);
- 
- // ─── Save / Load ─────────────────────────────────────────
- const SAVE_KEY = 'crystal_clicker_save';
- 
+}
+
+// ─── Toast Notification ──────────────────────────────────
+let toastTimer = null;
+function showToast(icon, text) {
+  toastIcon.innerHTML = icon;
+  toastText.textContent = text;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+}
+
+// ─── Modal ───────────────────────────────────────────────
+function showModal(title, text, reward) {
+  modalTitle.textContent = title;
+  modalText.innerHTML = text;
+  modalReward.textContent = reward || '';
+  modalOverlay.classList.add('show');
+}
+
+modalBtn.addEventListener('click', () => modalOverlay.classList.remove('show'));
+modalOverlay.addEventListener('click', (e) => {
+  if (e.target === modalOverlay) modalOverlay.classList.remove('show');
+});
+
+function getBuyAmountLabel(amount) {
+  return amount === 'max' ? '全購入' : `${amount}個`;
+}
+
+function renderBuyAmountSelector() {
+  return `<div class="buy-amount-selector">${BUY_AMOUNTS.map(amount => `<button class="buy-amount-btn ${state.buyAmount === amount ? 'active' : ''}" data-buy-amount="${amount}">${getBuyAmountLabel(amount)}</button>`).join('')}</div>`;
+}
+
+function bindBuyAmountSelector(panel) {
+  panel.querySelectorAll('.buy-amount-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      state.buyAmount = btn.dataset.buyAmount === 'max' ? 'max' : Number(btn.dataset.buyAmount);
+      renderTab(activeTab);
+    });
+  });
+}
+
+function calcBulkBuyResult(upgrade, level, amount) {
+  const maxPurchases = amount === 'max' ? (upgrade.maxLv - level) : Math.min(amount, upgrade.maxLv - level);
+  let totalCost = 0;
+  let purchased = 0;
+
+  for (let i = 0; i < maxPurchases; i++) {
+    const nextLv = level + i;
+    const price = calcUpgradeCost(upgrade.baseCost, upgrade.costMult, nextLv);
+    if (state.crystals < totalCost + price) break;
+    totalCost += price;
+    purchased++;
+  }
+
+  return { totalCost, purchased };
+}
+
+// ─── Render Upgrades Tab ─────────────────────────────────
+function renderUpgrades() {
+  const panel = $('panel-upgrades');
+  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector();
+
+  for (const u of CLICK_UPGRADES) {
+    const lv = state.clickLevels[u.id] || 0;
+    const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
+    const maxed = lv >= u.maxLv;
+    const affordable = state.crystals >= cost && !maxed;
+    const unlocked = !u.unlock || state.totalEarned >= u.unlock;
+    const progress = Math.min(state.crystals / cost * 100, 100);
+
+    if (!unlocked) {
+      html += `<div class="upgrade-card locked">
+        <div class="upgrade-icon">${u.icon}</div>
+        <div class="upgrade-info">
+          <div class="upgrade-name">???</div>
+          <div class="upgrade-desc">累計${formatNum(u.unlock)}で解放</div>
+        </div>
+      </div>`;
+      continue;
+    }
+
+    html += `<div class="upgrade-card ${affordable ? 'affordable' : ''} ${maxed ? 'max-level' : ''}"
+      data-type="click" data-id="${u.id}">
+      <div class="upgrade-icon">${u.icon}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-name">${u.name}</div>
+        <div class="upgrade-desc">${u.desc}</div>
+        <div class="upgrade-effect">1タップ +${formatNum(u.power)}</div>
+      </div>
+      <div class="upgrade-right">
+        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
+          `<div class="upgrade-cost">${formatNum(cost)}</div>`}
+        <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
+      </div>
+      ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
+    </div>`;
+  }
+
+  panel.innerHTML = html;
+  bindBuyAmountSelector(panel);
+
+  // Bind click events
+  panel.querySelectorAll('.upgrade-card[data-type="click"]').forEach(card => {
+    card.addEventListener('click', () => buyClickUpgrade(card.dataset.id));
+  });
+}
+
+function renderAuto() {
+  const panel = $('panel-auto');
+  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25%</div>';
+
+  for (const u of AUTO_UPGRADES) {
+    const lv = state.autoLevels[u.id] || 0;
+    const cost = calcUpgradeCost(u.baseCost, u.costMult, lv);
+    const maxed = lv >= u.maxLv;
+    const affordable = state.crystals >= cost && !maxed;
+    const unlocked = !u.unlock || state.totalEarned >= u.unlock;
+    const progress = Math.min(state.crystals / cost * 100, 100);
+
+    if (!unlocked) {
+      html += `<div class="upgrade-card locked">
+        <div class="upgrade-icon">${u.icon}</div>
+        <div class="upgrade-info">
+          <div class="upgrade-name">???</div>
+          <div class="upgrade-desc">累計${formatNum(u.unlock)}で解放</div>
+        </div>
+      </div>`;
+      continue;
+    }
+
+    const facilityBonus = 1 + Math.floor(lv / 25) * 0.25;
+    const totalCps = u.cps * lv * facilityBonus;
+    html += `<div class="upgrade-card ${affordable ? 'affordable' : ''} ${maxed ? 'max-level' : ''}"
+      data-type="auto" data-id="${u.id}">
+      <div class="upgrade-icon">${u.icon}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-name">${u.name}</div>
+        <div class="upgrade-desc">${u.desc}（25個ごとに+25%）</div>
+        <div class="upgrade-effect">${lv > 0 ? `合計: +${formatNum(totalCps)}/秒` : '未所持'}</div>
+      </div>
+      <div class="upgrade-right">
+        ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
+          `<div class="upgrade-cost">${formatNum(cost)}</div>`}
+        <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
+      </div>
+      ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
+    </div>`;
+  }
+
+  panel.innerHTML = html;
+  bindBuyAmountSelector(panel);
+
+  panel.querySelectorAll('.upgrade-card[data-type="auto"]').forEach(card => {
+    card.addEventListener('click', () => buyAutoUpgrade(card.dataset.id));
+  });
+}
+
+function renderPrestige() {
+  const panel = $('panel-prestige');
+  const potentialStars = calcPrestigeStars();
+  const newStars = Math.max(0, potentialStars - 0); // stars earned this prestige
+  const m = getPrestigeMultipliers();
+  const currentBonus = Math.floor((1 + state.stars * 0.05) * 100 - 100);
+
+  let html = `<div class="prestige-panel">
+    <div class="prestige-info-box">
+      <div class="prestige-stars">${state.stars} &#11088;</div>
+      <div class="prestige-stars-label">転生スター</div>
+      <div class="prestige-bonus">現在のボーナス: 全生産 +${currentBonus}%</div>
+      <div class="prestige-next">
+        今すぐ転生で <strong>+${newStars} &#11088;</strong><br>
+        <small>(最初の星は累計${formatNum(1e6)}で獲得)</small><br>
+        <small>持ち越し: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> クリスタル</small>
+      </div>
+      <button class="prestige-btn" id="prestige-btn" ${newStars < 1 ? 'disabled' : ''}>
+        &#11088; 転生 (+${newStars} 星)
+      </button>
+    </div>
+
+    <div class="section-title">スター強化</div>`;
+
+  for (const pu of PRESTIGE_UPGRADES) {
+    const purchased = state.prestigeUpgrades.includes(pu.id);
+    const affordable = state.stars >= pu.cost && !purchased;
+    html += `<div class="prestige-upgrade-card ${affordable ? 'affordable' : ''} ${purchased ? 'purchased' : ''}"
+      data-id="${pu.id}">
+      <div class="upgrade-icon" style="background:rgba(251,191,36,0.15);">${pu.icon}</div>
+      <div class="upgrade-info">
+        <div class="upgrade-name">${pu.name}</div>
+        <div class="upgrade-desc">${pu.desc}</div>
+      </div>
+      <div class="upgrade-right">
+        <div class="upgrade-cost" style="color:var(--gold);">${purchased ? '&#10003;' : pu.cost + ' &#11088;'}</div>
+      </div>
+    </div>`;
+  }
+
+  html += '</div>';
+  panel.innerHTML = html;
+
+  // Prestige button
+  const prestigeBtn = $('prestige-btn');
+  if (prestigeBtn) {
+    prestigeBtn.addEventListener('click', () => doPrestige(newStars));
+  }
+
+  // Prestige upgrade clicks
+  panel.querySelectorAll('.prestige-upgrade-card:not(.purchased)').forEach(card => {
+    card.addEventListener('click', () => buyPrestigeUpgrade(card.dataset.id));
+  });
+}
+
+function renderAchievements() {
+  const panel = $('panel-achievements');
+  const unlocked = state.unlockedAchievements.length;
+  const total = ACHIEVEMENTS.length;
+
+  let html = `<div class="section-title">実績 (${unlocked}/${total})</div>`;
+
+  for (const a of ACHIEVEMENTS) {
+    const isUnlocked = state.unlockedAchievements.includes(a.id);
+    html += `<div class="achievement-card ${isUnlocked ? 'unlocked' : 'locked'}">
+      <div class="achievement-icon">${isUnlocked ? a.icon : '&#128274;'}</div>
+      <div class="achievement-info">
+        <div class="achievement-name">${isUnlocked ? a.name : '???'}</div>
+        <div class="achievement-desc">${a.desc}</div>
+        ${a.reward ? `<div class="achievement-reward">${isUnlocked ? '&#10003; ' : ''}${getAchievementRewardText(a.reward)}</div>` : ''}
+      </div>
+    </div>`;
+  }
+
+  panel.innerHTML = html;
+}
+
+function renderSettings() {
+  const panel = $('panel-settings');
+  const achievementBoosts = getAchievementBoosts();
+
+  panel.innerHTML = `
+    <div class="section-title">設定</div>
+    <div class="settings-group">
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">効果音</div>
+        </div>
+        <button class="toggle-switch ${state.soundEnabled ? 'active' : ''}" id="toggle-sound"></button>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">パーティクル</div>
+        </div>
+        <button class="toggle-switch ${state.particlesEnabled ? 'active' : ''}" id="toggle-particles"></button>
+      </div>
+    </div>
+
+    <div class="section-title">セーブデータ</div>
+    <div class="settings-group">
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">手動セーブ</div>
+          <div class="settings-sublabel">30秒ごとに自動セーブ</div>
+        </div>
+        <button class="settings-btn" id="btn-save">保存</button>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">セーブを書き出し</div>
+          <div class="settings-sublabel">セーブデータをコピー</div>
+        </div>
+        <button class="settings-btn" id="btn-export">書き出し</button>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">セーブを読み込み</div>
+          <div class="settings-sublabel">貼り付けて復元</div>
+        </div>
+        <button class="settings-btn" id="btn-import">読み込み</button>
+      </div>
+      <div class="settings-item">
+        <div>
+          <div class="settings-label">全データリセット</div>
+          <div class="settings-sublabel">注意: 元に戻せません</div>
+        </div>
+        <button class="settings-btn danger" id="btn-reset">リセット</button>
+      </div>
+    </div>
+
+    <div class="section-title">統計</div>
+    <div class="settings-group" style="padding:8px 16px;">
+      <div class="stat-row"><span class="stat-label">総タップ数</span><span class="stat-value">${formatNum(state.totalClicks)}</span></div>
+      <div class="stat-row"><span class="stat-label">累計獲得</span><span class="stat-value">${formatNum(state.totalEarned)}</span></div>
+      <div class="stat-row"><span class="stat-label">タップ威力</span><span class="stat-value">${formatNum(calcClickPower())}</span></div>
+      <div class="stat-row"><span class="stat-label">施設CPS</span><span class="stat-value">${formatNum(calcCPS())}/s</span></div>
+      <div class="stat-row"><span class="stat-label">転生スター</span><span class="stat-value">${state.stars} &#11088;</span></div>
+      <div class="stat-row"><span class="stat-label">転生回数</span><span class="stat-value">${state.totalPrestiges}</span></div>
+      <div class="stat-row"><span class="stat-label">星ボーナス</span><span class="stat-value">+${Math.floor(state.stars * 5)}%</span></div>
+      <div class="stat-row"><span class="stat-label">購入強化数</span><span class="stat-value">${state.totalUpgrades}</span></div>
+      <div class="stat-row"><span class="stat-label">実績</span><span class="stat-value">${state.unlockedAchievements.length}/${ACHIEVEMENTS.length}</span></div>
+      <div class="stat-row"><span class="stat-label">実績生産ボーナス</span><span class="stat-value">+${formatPercent(achievementBoosts.allMult)}</span></div>
+      <div class="stat-row"><span class="stat-label">実績スター倍率</span><span class="stat-value">+${formatPercent(achievementBoosts.starGain)}</span></div>
+      <div class="stat-row"><span class="stat-label">プレイ時間</span><span class="stat-value">${formatTime(state.totalTimePlayed)}</span></div>
+      <div class="stat-row" style="border:none;"><span class="stat-label">最高CPS</span><span class="stat-value">${formatNum(state.bestCps)}/s</span></div>
+    </div>
+  `;
+
+  // Settings event listeners
+  $('toggle-sound').addEventListener('click', () => {
+    state.soundEnabled = !state.soundEnabled;
+    AudioEngine.enabled = state.soundEnabled;
+    renderSettings();
+  });
+
+  $('toggle-particles').addEventListener('click', () => {
+    state.particlesEnabled = !state.particlesEnabled;
+    renderSettings();
+  });
+
+  $('btn-save').addEventListener('click', () => {
+    saveGame();
+    showToast('&#128190;', 'セーブしました');
+  });
+
+  $('btn-export').addEventListener('click', exportSave);
+  $('btn-import').addEventListener('click', importSave);
+  $('btn-reset').addEventListener('click', resetGame);
+}
+
+function renderTab(tab) {
+  switch (tab) {
+    case 'upgrades': renderUpgrades(); break;
+    case 'auto': renderAuto(); break;
+    case 'prestige': renderPrestige(); break;
+    case 'achievements': renderAchievements(); break;
+    case 'settings': renderSettings(); break;
+  }
+}
+
+// ─── Buy Logic ───────────────────────────────────────────
+function buyClickUpgrade(id) {
+  const u = CLICK_UPGRADES.find(u => u.id === id);
+  if (!u) return;
+  const lv = state.clickLevels[u.id] || 0;
+  if (lv >= u.maxLv) return;
+
+  const result = calcBulkBuyResult(u, lv, state.buyAmount);
+  if (result.purchased < 1) {
+    AudioEngine.error();
+    return;
+  }
+
+  state.crystals -= result.totalCost;
+  state.clickLevels[u.id] = lv + result.purchased;
+  state.totalUpgrades += result.purchased;
+  AudioEngine.buy();
+  updateDisplay();
+  renderUpgrades();
+  checkAchievements();
+}
+
+function buyAutoUpgrade(id) {
+  const u = AUTO_UPGRADES.find(u => u.id === id);
+  if (!u) return;
+  const lv = state.autoLevels[u.id] || 0;
+  if (lv >= u.maxLv) return;
+
+  const result = calcBulkBuyResult(u, lv, state.buyAmount);
+  if (result.purchased < 1) {
+    AudioEngine.error();
+    return;
+  }
+
+  state.crystals -= result.totalCost;
+  state.autoLevels[u.id] = lv + result.purchased;
+  state.totalUpgrades += result.purchased;
+  AudioEngine.buy();
+  updateDisplay();
+  renderAuto();
+  checkAchievements();
+}
+
+function buyPrestigeUpgrade(id) {
+  const pu = PRESTIGE_UPGRADES.find(p => p.id === id);
+  if (!pu) return;
+  if (state.prestigeUpgrades.includes(id)) return;
+  if (state.stars < pu.cost) {
+    AudioEngine.error();
+    return;
+  }
+  state.stars -= pu.cost;
+  state.prestigeUpgrades.push(id);
+  AudioEngine.buy();
+  updateDisplay();
+  renderPrestige();
+}
+
+function doPrestige(newStars) {
+  if (newStars < 1) return;
+
+  const m = getPrestigeMultipliers();
+  const carryCrystal = Math.floor(state.crystals * m.prestigeCarry);
+
+  if (!confirm(`+${newStars}星で転生しますか？\nクリスタルと通常強化はリセットされますが、星とスター強化は保持されます。`)) return;
+
+  state.stars += newStars;
+  state.totalPrestiges++;
+
+  // Reset progress but keep prestige data
+  const keepStars = state.stars;
+  const keepPrestiges = state.totalPrestiges;
+  const keepPrestigeUpgrades = [...state.prestigeUpgrades];
+  const keepAchievements = [...state.unlockedAchievements];
+  const keepSettings = { sound: state.soundEnabled, particles: state.particlesEnabled };
+  const keepStats = {
+    totalClicks: state.totalClicks,
+    totalUpgrades: state.totalUpgrades,
+    totalTimePlayed: state.totalTimePlayed,
+    bestCps: Math.max(state.bestCps, calcCPS()),
+    bestClickPower: Math.max(state.bestClickPower, calcClickPower()),
+  };
+
+  // Reset
+  state = getDefaultState();
+  state.stars = keepStars;
+  state.totalPrestiges = keepPrestiges;
+  state.prestigeUpgrades = keepPrestigeUpgrades;
+  state.unlockedAchievements = keepAchievements;
+  state.soundEnabled = keepSettings.sound;
+  state.particlesEnabled = keepSettings.particles;
+  state.totalClicks = keepStats.totalClicks;
+  state.totalUpgrades = keepStats.totalUpgrades;
+  state.totalTimePlayed = keepStats.totalTimePlayed;
+  state.bestCps = keepStats.bestCps;
+  state.bestClickPower = keepStats.bestClickPower;
+
+  // Head start
+  if (m.headStart > 0) {
+    state.crystals = m.headStart;
+    state.totalEarned = m.headStart;
+  }
+
+  if (carryCrystal > 0) {
+    state.crystals += carryCrystal;
+    state.totalEarned += carryCrystal;
+  }
+
+  AudioEngine.prestige();
+  showToast('&#11088;', `転生完了！ +${newStars}星`);
+
+  updateDisplay();
+  renderTab(activeTab);
+  saveGame();
+}
+
+// ─── 実績 ────────────────────────────────────────
+function checkAchievements() {
+  const checkState = {
+    totalClicks: state.totalClicks,
+    totalEarned: state.totalEarned,
+    cps: calcCPS(),
+    totalPrestiges: state.totalPrestiges,
+    totalUpgrades: state.totalUpgrades,
+  };
+
+  for (const a of ACHIEVEMENTS) {
+    if (state.unlockedAchievements.includes(a.id)) continue;
+    if (a.check(checkState)) {
+      state.unlockedAchievements.push(a.id);
+      AudioEngine.achievement();
+      const rewardText = a.reward ? ` (${getAchievementRewardText(a.reward)})` : '';
+      showToast(a.icon, a.name + ' を達成！' + rewardText);
+
+      // Update achievements badge
+      updateBadges();
+    }
+  }
+}
+
+function updateBadges() {
+  // Check for affordable upgrades
+  let hasAffordableClick = false;
+  for (const u of CLICK_UPGRADES) {
+    const lv = state.clickLevels[u.id] || 0;
+    if (lv >= u.maxLv) continue;
+    const unlocked = !u.unlock || state.totalEarned >= u.unlock;
+    if (!unlocked) continue;
+    if (state.crystals >= calcUpgradeCost(u.baseCost, u.costMult, lv)) {
+      hasAffordableClick = true;
+      break;
+    }
+  }
+
+  let hasAffordableAuto = false;
+  for (const u of AUTO_UPGRADES) {
+    const lv = state.autoLevels[u.id] || 0;
+    if (lv >= u.maxLv) continue;
+    const unlocked = !u.unlock || state.totalEarned >= u.unlock;
+    if (!unlocked) continue;
+    if (state.crystals >= calcUpgradeCost(u.baseCost, u.costMult, lv)) {
+      hasAffordableAuto = true;
+      break;
+    }
+  }
+
+  const canPrestige = calcPrestigeStars() > 0;
+
+  $('badge-upgrades').classList.toggle('show', hasAffordableClick);
+  $('badge-auto').classList.toggle('show', hasAffordableAuto);
+  $('badge-prestige').classList.toggle('show', canPrestige);
+}
+
+// ─── Display Update ──────────────────────────────────────
+function updateDisplay() {
+  const cp = calcClickPower();
+  const cps = calcCPS();
+
+  state.clickPower = cp;
+  state.cps = cps;
+  state.bestCps = Math.max(state.bestCps, cps);
+
+  crystalCountEl.textContent = formatNum(state.crystals);
+  cpsDisplayEl.textContent = `${formatNum(cps)} クリスタル / 秒`;
+  clickPowerLabel.innerHTML = `+${formatNum(cp)}`;
+  headerCps.textContent = `${formatNum(cps)}/s`;
+  headerClicks.textContent = `${formatNum(state.totalClicks)} タップ`;
+
+  if (state.stars > 0) {
+    prestigeDisplayEl.innerHTML = `&#11088; ${state.stars} 星 (+${Math.floor(state.stars * 5)}% ボーナス)`;
+  } else {
+    prestigeDisplayEl.textContent = '';
+  }
+
+  updateBadges();
+}
+
+// ─── Game Loop ───────────────────────────────────────────
+let lastTick = Date.now();
+
+function gameTick() {
+  const now = Date.now();
+  const dt = (now - lastTick) / 1000;
+  lastTick = now;
+
+  // 施設CPS
+  const cps = calcCPS();
+  if (cps > 0) {
+    const earned = cps * dt;
+    state.crystals += earned;
+    state.totalEarned += earned;
+  }
+
+  state.totalTimePlayed += dt;
+
+  updateDisplay();
+
+  // Re-render active tab periodically for progress bars
+  if (activeTab === 'upgrades' || activeTab === 'auto') {
+    renderTab(activeTab);
+  }
+
+  checkAchievements();
+}
+
+// Run game loop at ~4 ticks per second for smooth updates without battery drain
+setInterval(gameTick, 250);
+
+// ─── Save / Load ─────────────────────────────────────────
+const SAVE_KEY = 'crystal_clicker_save';
+
 @@ -1808,141 +1875,141 @@ function loadGame() {
-     const data = localStorage.getItem(SAVE_KEY);
-     if (!data) return false;
-     const saved = JSON.parse(data);
-     // Merge with defaults to handle new fields
-     const defaults = getDefaultState();
-     state = { ...defaults, ...saved };
-     // Ensure arrays are arrays
-     if (!Array.isArray(state.prestigeUpgrades)) state.prestigeUpgrades = [];
-     if (!Array.isArray(state.unlockedAchievements)) state.unlockedAchievements = [];
-     if (typeof state.clickLevels !== 'object') state.clickLevels = {};
-     if (typeof state.autoLevels !== 'object') state.autoLevels = {};
-     return true;
-   } catch (e) {
-     console.warn('Load failed:', e);
-     return false;
-   }
- }
- 
- function exportSave() {
-   saveGame();
-   const data = localStorage.getItem(SAVE_KEY);
-   if (!data) return;
-   const encoded = btoa(data);
-   if (navigator.clipboard) {
-     navigator.clipboard.writeText(encoded).then(() => {
--      showToast('&#128203;', 'Save data copied!');
-+      showToast('&#128203;', 'セーブデータをコピーしました');
-     }).catch(() => {
--      prompt('Copy this save data:', encoded);
-+      prompt('このセーブデータをコピーしてください:', encoded);
-     });
-   } else {
--    prompt('Copy this save data:', encoded);
-+    prompt('このセーブデータをコピーしてください:', encoded);
-   }
- }
- 
- function importSave() {
--  const input = prompt('Paste your save data:');
-+  const input = prompt('セーブデータを貼り付けてください:');
-   if (!input) return;
-   try {
-     const decoded = atob(input.trim());
-     const parsed = JSON.parse(decoded);
-     if (typeof parsed.crystals !== 'number') throw new Error('Invalid save');
-     localStorage.setItem(SAVE_KEY, decoded);
-     loadGame();
-     updateDisplay();
-     renderTab(activeTab);
--    showToast('&#128230;', 'Save imported!');
-+    showToast('&#128230;', 'セーブを読み込みました');
-   } catch (e) {
--    alert('Invalid save data. Please check and try again.');
-+    alert('セーブデータが不正です。内容を確認してください。');
-   }
- }
- 
- function resetGame() {
--  if (!confirm('Reset ALL data? This cannot be undone!')) return;
--  if (!confirm('Are you really sure? Everything will be lost!')) return;
-+  if (!confirm('全データをリセットしますか？この操作は戻せません。')) return;
-+  if (!confirm('本当に実行しますか？すべて失われます。')) return;
-   localStorage.removeItem(SAVE_KEY);
-   state = getDefaultState();
-   updateDisplay();
-   renderTab(activeTab);
--  showToast('&#128465;', 'All data reset.');
-+  showToast('&#128465;', '全データをリセットしました');
- }
- 
- // Auto-save every 30 seconds
- setInterval(saveGame, 30000);
- 
- // ─── Offline Rewards ─────────────────────────────────────
- function calcOfflineRewards() {
-   if (!state.lastOnline) return;
-   const now = Date.now();
-   const elapsed = (now - state.lastOnline) / 1000;
- 
-   // Minimum 60 seconds away for offline rewards
-   if (elapsed < 60) return;
- 
-   // Cap at 24 hours
-   const cappedElapsed = Math.min(elapsed, 86400);
- 
-   const cps = calcCPS();
-   if (cps <= 0) return;
- 
-   // Base offline rate: 50% of CPS
-   let offlineRate = 0.5;
-   const m = getPrestigeMultipliers();
-   offlineRate *= m.offlineMult;
- 
-   const earned = Math.floor(cps * cappedElapsed * offlineRate);
-   if (earned <= 0) return;
- 
-   state.crystals += earned;
-   state.totalEarned += earned;
- 
-   showModal(
--    'Welcome Back!',
--    `You were away for <strong>${formatTime(cappedElapsed)}</strong>.<br>
--    Your generators earned crystals while you were gone!<br>
--    <small>(${Math.floor(offlineRate * 100)}% offline rate)</small>`,
--    `+${formatNum(earned)} crystals`
-+    'おかえりなさい！',
-+    `離席時間: <strong>${formatTime(cappedElapsed)}</strong><br>
-+    不在中に施設がクリスタルを生産しました！<br>
-+    <small>(オフライン効率 ${Math.floor(offlineRate * 100)}%)</small>`,
-+    `+${formatNum(earned)} クリスタル`
-   );
- }
- 
- // ─── Visibility Change (pause/resume) ────────────────────
- document.addEventListener('visibilitychange', () => {
-   if (document.hidden) {
-     saveGame();
-   } else {
-     // Resuming - calculate offline rewards for time away
-     const now = Date.now();
-     const elapsed = (now - state.lastOnline) / 1000;
-     if (elapsed > 5) {
-       // Small gap - just add CPS earnings
-       const cps = calcCPS();
-       if (cps > 0) {
-         const earned = Math.floor(cps * elapsed * 0.5);
-         state.crystals += earned;
-         state.totalEarned += earned;
-         if (elapsed > 60) {
--          showToast('&#127769;', `+${formatNum(earned)} offline crystals`);
-+          showToast('&#127769;', `オフライン報酬 +${formatNum(earned)}`);
-         }
-       }
-     }
-     state.lastOnline = now;
-     lastTick = now;
-     updateDisplay();
-     renderTab(activeTab);
-   }
- });
- 
- // ─── Init ────────────────────────────────────────────────
- function init() {
-   AudioEngine.init();
- 
-   const loaded = loadGame();
- 
-   if (loaded) {
-     calcOfflineRewards();
-   }
- 
-   AudioEngine.enabled = state.soundEnabled;
-   state.lastOnline = Date.now();
-   lastTick = Date.now();
- 
-   updateDisplay();
+    const data = localStorage.getItem(SAVE_KEY);
+    if (!data) return false;
+    const saved = JSON.parse(data);
+    // Merge with defaults to handle new fields
+    const defaults = getDefaultState();
+    state = { ...defaults, ...saved };
+    // Ensure arrays are arrays
+    if (!Array.isArray(state.prestigeUpgrades)) state.prestigeUpgrades = [];
+    if (!Array.isArray(state.unlockedAchievements)) state.unlockedAchievements = [];
+    if (typeof state.clickLevels !== 'object') state.clickLevels = {};
+    if (typeof state.autoLevels !== 'object') state.autoLevels = {};
+    return true;
+  } catch (e) {
+    console.warn('Load failed:', e);
+    return false;
+  }
+}
+
+function exportSave() {
+  saveGame();
+  const data = localStorage.getItem(SAVE_KEY);
+  if (!data) return;
+  const encoded = btoa(data);
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(encoded).then(() => {
+      showToast('&#128203;', 'セーブデータをコピーしました');
+    }).catch(() => {
+      prompt('このセーブデータをコピーしてください:', encoded);
+    });
+  } else {
+    prompt('このセーブデータをコピーしてください:', encoded);
+  }
+}
+
+function importSave() {
+  const input = prompt('セーブデータを貼り付けてください:');
+  if (!input) return;
+  try {
+    const decoded = atob(input.trim());
+    const parsed = JSON.parse(decoded);
+    if (typeof parsed.crystals !== 'number') throw new Error('Invalid save');
+    localStorage.setItem(SAVE_KEY, decoded);
+    loadGame();
+    updateDisplay();
+    renderTab(activeTab);
+    showToast('&#128230;', 'セーブを読み込みました');
+  } catch (e) {
+    alert('セーブデータが不正です。内容を確認してください。');
+  }
+}
+
+function resetGame() {
+  if (!confirm('全データをリセットしますか？この操作は戻せません。')) return;
+  if (!confirm('本当に実行しますか？すべて失われます。')) return;
+  localStorage.removeItem(SAVE_KEY);
+  state = getDefaultState();
+  updateDisplay();
+  renderTab(activeTab);
+  showToast('&#128465;', '全データをリセットしました');
+}
+
+// Auto-save every 30 seconds
+setInterval(saveGame, 30000);
+
+// ─── Offline Rewards ─────────────────────────────────────
+function calcOfflineRewards() {
+  if (!state.lastOnline) return;
+  const now = Date.now();
+  const elapsed = (now - state.lastOnline) / 1000;
+
+  // Minimum 60 seconds away for offline rewards
+  if (elapsed < 60) return;
+
+  // Cap at 24 hours
+  const cappedElapsed = Math.min(elapsed, 86400);
+
+  const cps = calcCPS();
+  if (cps <= 0) return;
+
+  // Base offline rate: 50% of CPS
+  let offlineRate = 0.5;
+  const m = getPrestigeMultipliers();
+  offlineRate *= m.offlineMult;
+
+  const earned = Math.floor(cps * cappedElapsed * offlineRate);
+  if (earned <= 0) return;
+
+  state.crystals += earned;
+  state.totalEarned += earned;
+
+  showModal(
+    'おかえりなさい！',
+    `離席時間: <strong>${formatTime(cappedElapsed)}</strong><br>
+    不在中に施設がクリスタルを生産しました！<br>
+    <small>(オフライン効率 ${Math.floor(offlineRate * 100)}%)</small>`,
+    `+${formatNum(earned)} クリスタル`
+  );
+}
+
+// ─── Visibility Change (pause/resume) ────────────────────
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    saveGame();
+  } else {
+    // Resuming - calculate offline rewards for time away
+    const now = Date.now();
+    const elapsed = (now - state.lastOnline) / 1000;
+    if (elapsed > 5) {
+      // Small gap - just add CPS earnings
+      const cps = calcCPS();
+      if (cps > 0) {
+        const earned = Math.floor(cps * elapsed * 0.5);
+        state.crystals += earned;
+        state.totalEarned += earned;
+        if (elapsed > 60) {
+          showToast('&#127769;', `オフライン報酬 +${formatNum(earned)}`);
+        }
+      }
+    }
+    state.lastOnline = now;
+    lastTick = now;
+    updateDisplay();
+    renderTab(activeTab);
+  }
+});
+
+// ─── Init ────────────────────────────────────────────────
+function init() {
+  AudioEngine.init();
+
+  const loaded = loadGame();
+
+  if (loaded) {
+    calcOfflineRewards();
+  }
+
+  AudioEngine.enabled = state.soundEnabled;
+  state.lastOnline = Date.now();
+  lastTick = Date.now();
+
+  updateDisplay();
