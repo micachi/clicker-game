@@ -994,15 +994,15 @@ const AudioEngine = {
 
 // タップ強化（タップ威力アップ）
 const CLICK_UPGRADES = [
-  { id: 'sharp', name: '鋭い指先', icon: '&#128296;', desc: 'タップ威力 +1', baseCost: 15, costMult: 1.4, power: 1, maxLv: 50 },
-  { id: 'double', name: 'ダブルタップ', icon: '&#9996;', desc: 'タップ威力 +3', baseCost: 200, costMult: 1.5, power: 3, maxLv: 30, unlock: 10 },
-  { id: 'crystal_pick', name: 'クリスタルピック', icon: '&#9935;', desc: 'タップ威力 +10', baseCost: 2500, costMult: 1.6, power: 10, maxLv: 25, unlock: 100 },
-  { id: 'midas', name: 'ミダスタッチ', icon: '&#128081;', desc: 'タップ威力 +50', baseCost: 50000, costMult: 1.7, power: 50, maxLv: 20, unlock: 1000 },
-  { id: 'thunder', name: '雷拳', icon: '&#9889;', desc: 'タップ威力 +250', baseCost: 1e6, costMult: 1.8, power: 250, maxLv: 15, unlock: 10000 },
-  { id: 'cosmic', name: 'コズミックブロー', icon: '&#127756;', desc: 'タップ威力 +2000', baseCost: 5e7, costMult: 2.0, power: 2000, maxLv: 10, unlock: 100000 },
-  { id: 'quantum', name: '量子掌', icon: '&#9883;', desc: 'タップ威力 +12000', baseCost: 2e9, costMult: 2.05, power: 12000, maxLv: 8, unlock: 5e8 },
-  { id: 'void', name: 'ヴォイドブレイカー', icon: '&#127776;', desc: 'タップ威力 +80000', baseCost: 8e10, costMult: 2.1, power: 80000, maxLv: 6, unlock: 2e10 },
-  { id: 'origin', name: 'オリジンパルス', icon: '&#10024;', desc: 'タップ威力 +500000', baseCost: 3e12, costMult: 2.2, power: 500000, maxLv: 5, unlock: 5e11 },
+  { id: 'sharp', name: '鋭い指先', icon: '&#128296;', desc: 'タップ威力 +1', baseCost: 15, costMult: 1.4, power: 1, maxLv: Number.POSITIVE_INFINITY },
+  { id: 'double', name: 'ダブルタップ', icon: '&#9996;', desc: 'タップ威力 +3', baseCost: 200, costMult: 1.5, power: 3, maxLv: Number.POSITIVE_INFINITY, unlock: 10 },
+  { id: 'crystal_pick', name: 'クリスタルピック', icon: '&#9935;', desc: 'タップ威力 +10', baseCost: 2500, costMult: 1.6, power: 10, maxLv: Number.POSITIVE_INFINITY, unlock: 100 },
+  { id: 'midas', name: 'ミダスタッチ', icon: '&#128081;', desc: 'タップ威力 +50', baseCost: 50000, costMult: 1.7, power: 50, maxLv: Number.POSITIVE_INFINITY, unlock: 1000 },
+  { id: 'thunder', name: '雷拳', icon: '&#9889;', desc: 'タップ威力 +250', baseCost: 1e6, costMult: 1.8, power: 250, maxLv: Number.POSITIVE_INFINITY, unlock: 10000 },
+  { id: 'cosmic', name: 'コズミックブロー', icon: '&#127756;', desc: 'タップ威力 +2000', baseCost: 5e7, costMult: 2.0, power: 2000, maxLv: Number.POSITIVE_INFINITY, unlock: 100000 },
+  { id: 'quantum', name: '量子掌', icon: '&#9883;', desc: 'タップ威力 +12000', baseCost: 2e9, costMult: 2.05, power: 12000, maxLv: Number.POSITIVE_INFINITY, unlock: 5e8 },
+  { id: 'void', name: 'ヴォイドブレイカー', icon: '&#127776;', desc: 'タップ威力 +80000', baseCost: 8e10, costMult: 2.1, power: 80000, maxLv: Number.POSITIVE_INFINITY, unlock: 2e10 },
+  { id: 'origin', name: 'オリジンパルス', icon: '&#10024;', desc: 'タップ威力 +500000', baseCost: 3e12, costMult: 2.2, power: 500000, maxLv: Number.POSITIVE_INFINITY, unlock: 5e11 },
 ];
 
 // 施設（自動生産）
@@ -1380,7 +1380,7 @@ function calcBulkBuyResult(upgrade, level, amount) {
 // ─── Render Upgrades Tab ─────────────────────────────────
 function renderUpgrades() {
   const panel = $('panel-upgrades');
-  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 1 / 10 / 25 / 100 / 全購入</div>';
+  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 1 / 10 / 25 / 100 / 全購入 / タップ強化上限なし</div>';
 
   for (const u of CLICK_UPGRADES) {
     const lv = state.clickLevels[u.id] || 0;
