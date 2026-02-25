@@ -917,7 +917,7 @@ body {
 
 // ─── Number Formatting ───────────────────────────────────
 const SUFFIXES = ['', 'K', 'M', 'B', 'T', 'Qa', 'Qi', 'Sx', 'Sp', 'Oc', 'No', 'Dc'];
-const BUY_AMOUNTS = [10, 25, 100, 'max'];
+const BUY_AMOUNTS = [1, 10, 25, 100, 'max'];
 
 function formatNum(n) {
   if (n < 1000) return Math.floor(n).toString();
@@ -1077,6 +1077,7 @@ function getDefaultState() {
   return {
     crystals: 0,
     totalEarned: 0,
+    lifetimeEarned: 0,
     totalClicks: 0,
     totalUpgrades: 0,
     clickPower: 1,
@@ -1093,7 +1094,7 @@ function getDefaultState() {
     // Settings
     soundEnabled: true,
     particlesEnabled: true,
-    buyAmount: 10,
+    buyAmount: 1,
     // Timestamps
     lastSave: Date.now(),
     lastOnline: Date.now(),
@@ -1153,6 +1154,27 @@ function getAchievementBoosts() {
   return boosts;
 }
 
+
+function getLongTermBonus() {
+  const score = Math.log10(state.lifetimeEarned + 10);
+  const bonus = 1 + Math.min(score * 0.04, 1.2);
+  return bonus;
+}
+
+function getInflationPenalty(level) {
+  let penalty = 1;
+  if (level >= 40) penalty *= Math.pow(1.012, level - 39);
+  if (level >= 80) penalty *= Math.pow(1.015, level - 79);
+  return penalty;
+}
+
+function addEarnings(amount) {
+  if (amount <= 0) return;
+  state.crystals += amount;
+  state.totalEarned += amount;
+  state.lifetimeEarned += amount;
+}
+
 function calcClickPower() {
   let base = 1;
   for (const u of CLICK_UPGRADES) {
@@ -1161,7 +1183,8 @@ function calcClickPower() {
   }
   const m = getPrestigeMultipliers();
   const a = getAchievementBoosts();
-  return Math.floor(base * m.clickMult * a.clickMult * a.allMult);
+  const longTerm = getLongTermBonus();
+  return Math.floor(base * m.clickMult * a.clickMult * a.allMult * longTerm);
 }
 
 function calcCPS() {
@@ -1173,13 +1196,15 @@ function calcCPS() {
   }
   const m = getPrestigeMultipliers();
   const a = getAchievementBoosts();
-  return Math.floor(base * m.cpsMult * a.cpsMult * a.allMult);
+  const longTerm = getLongTermBonus();
+  return Math.floor(base * m.cpsMult * a.cpsMult * a.allMult * longTerm);
 }
 
 function calcUpgradeCost(baseCost, costMult, level) {
   const m = getPrestigeMultipliers();
   const a = getAchievementBoosts();
-  return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction * a.costReduction);
+  const inflation = getInflationPenalty(level);
+  return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction * a.costReduction * inflation);
 }
 
 function calcPrestigeStars() {
@@ -1234,8 +1259,7 @@ crystalBtn.addEventListener('pointerdown', (e) => {
 
   const now = Date.now();
   const power = calcClickPower();
-  state.crystals += power;
-  state.totalEarned += power;
+  addEarnings(power);
   state.totalClicks++;
 
   // Update display immediately
@@ -1351,7 +1375,7 @@ function calcBulkBuyResult(upgrade, level, amount) {
 // ─── Render Upgrades Tab ─────────────────────────────────
 function renderUpgrades() {
   const panel = $('panel-upgrades');
-  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 10 / 25 / 100 / 全購入</div>';
+  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 1 / 10 / 25 / 100 / 全購入</div>';
 
   for (const u of CLICK_UPGRADES) {
     const lv = state.clickLevels[u.id] || 0;
@@ -1400,7 +1424,7 @@ function renderUpgrades() {
 
 function renderAuto() {
   const panel = $('panel-auto');
-  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25%</div>';
+  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25% / 高Lvはコスト増でインフレ抑制</div>';
 
   for (const u of AUTO_UPGRADES) {
     const lv = state.autoLevels[u.id] || 0;
@@ -1463,7 +1487,8 @@ function renderPrestige() {
       <div class="prestige-next">
         今すぐ転生で <strong>+${newStars} &#11088;</strong><br>
         <small>(最初の星は累計${formatNum(1e6)}で獲得)</small><br>
-        <small>持ち越し: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> クリスタル</small>
+        <small>持ち越し: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> クリスタル</small><br>
+        <small>長期ボーナス: <strong>+${formatPercent(getLongTermBonus())}</strong></small>
       </div>
       <button class="prestige-btn" id="prestige-btn" ${newStars < 1 ? 'disabled' : ''}>
         &#11088; 転生 (+${newStars} 星)
@@ -1582,6 +1607,8 @@ function renderSettings() {
     <div class="settings-group" style="padding:8px 16px;">
       <div class="stat-row"><span class="stat-label">総タップ数</span><span class="stat-value">${formatNum(state.totalClicks)}</span></div>
       <div class="stat-row"><span class="stat-label">累計獲得</span><span class="stat-value">${formatNum(state.totalEarned)}</span></div>
+      <div class="stat-row"><span class="stat-label">生涯獲得</span><span class="stat-value">${formatNum(state.lifetimeEarned)}</span></div>
+      <div class="stat-row"><span class="stat-label">長期ボーナス</span><span class="stat-value">+${formatPercent(getLongTermBonus())}</span></div>
       <div class="stat-row"><span class="stat-label">タップ威力</span><span class="stat-value">${formatNum(calcClickPower())}</span></div>
       <div class="stat-row"><span class="stat-label">施設CPS</span><span class="stat-value">${formatNum(calcCPS())}/秒</span></div>
       <div class="stat-row"><span class="stat-label">転生スター</span><span class="stat-value">${state.stars} &#11088;</span></div>
@@ -1703,6 +1730,7 @@ function doPrestige(newStars) {
   const keepPrestigeUpgrades = [...state.prestigeUpgrades];
   const keepAchievements = [...state.unlockedAchievements];
   const keepSettings = { sound: state.soundEnabled, particles: state.particlesEnabled };
+  const keepLifetimeEarned = state.lifetimeEarned;
   const keepStats = {
     totalClicks: state.totalClicks,
     totalUpgrades: state.totalUpgrades,
@@ -1724,16 +1752,15 @@ function doPrestige(newStars) {
   state.totalTimePlayed = keepStats.totalTimePlayed;
   state.bestCps = keepStats.bestCps;
   state.bestClickPower = keepStats.bestClickPower;
+  state.lifetimeEarned = keepLifetimeEarned;
 
   // Head start
   if (m.headStart > 0) {
-    state.crystals = m.headStart;
-    state.totalEarned = m.headStart;
+    addEarnings(m.headStart);
   }
 
   if (carryCrystal > 0) {
-    state.crystals += carryCrystal;
-    state.totalEarned += carryCrystal;
+    addEarnings(carryCrystal);
   }
 
   AudioEngine.prestige();
@@ -1837,8 +1864,7 @@ function gameTick() {
   const cps = calcCPS();
   if (cps > 0) {
     const earned = cps * dt;
-    state.crystals += earned;
-    state.totalEarned += earned;
+    addEarnings(earned);
   }
 
   state.totalTimePlayed += dt;
@@ -1883,6 +1909,7 @@ function loadGame() {
     if (!Array.isArray(state.unlockedAchievements)) state.unlockedAchievements = [];
     if (typeof state.clickLevels !== 'object') state.clickLevels = {};
     if (typeof state.autoLevels !== 'object') state.autoLevels = {};
+    if (typeof state.lifetimeEarned !== 'number') state.lifetimeEarned = state.totalEarned || 0;
     return true;
   } catch (e) {
     console.warn('Load failed:', e);
@@ -1959,8 +1986,7 @@ function calcOfflineRewards() {
   const earned = Math.floor(cps * cappedElapsed * offlineRate);
   if (earned <= 0) return;
 
-  state.crystals += earned;
-  state.totalEarned += earned;
+  addEarnings(earned);
 
   showModal(
     'おかえりなさい！',
@@ -1984,8 +2010,7 @@ document.addEventListener('visibilitychange', () => {
       const cps = calcCPS();
       if (cps > 0) {
         const earned = Math.floor(cps * elapsed * 0.5);
-        state.crystals += earned;
-        state.totalEarned += earned;
+        addEarnings(earned);
         if (elapsed > 60) {
           showToast('&#127769;', `オフライン報酬 +${formatNum(earned)}`);
         }
