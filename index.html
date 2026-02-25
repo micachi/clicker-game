@@ -994,31 +994,31 @@ const AudioEngine = {
 
 // タップ強化（タップ威力アップ）
 const CLICK_UPGRADES = [
-  { id: 'sharp', name: '鋭い指先', icon: '&#128296;', desc: 'タップ威力 +1', baseCost: 15, costMult: 1.4, power: 1, maxLv: 50 },
-  { id: 'double', name: 'ダブルタップ', icon: '&#9996;', desc: 'タップ威力 +3', baseCost: 200, costMult: 1.5, power: 3, maxLv: 30, unlock: 10 },
-  { id: 'crystal_pick', name: 'クリスタルピック', icon: '&#9935;', desc: 'タップ威力 +10', baseCost: 2500, costMult: 1.6, power: 10, maxLv: 25, unlock: 100 },
-  { id: 'midas', name: 'ミダスタッチ', icon: '&#128081;', desc: 'タップ威力 +50', baseCost: 50000, costMult: 1.7, power: 50, maxLv: 20, unlock: 1000 },
-  { id: 'thunder', name: '雷拳', icon: '&#9889;', desc: 'タップ威力 +250', baseCost: 1e6, costMult: 1.8, power: 250, maxLv: 15, unlock: 10000 },
-  { id: 'cosmic', name: 'コズミックブロー', icon: '&#127756;', desc: 'タップ威力 +2000', baseCost: 5e7, costMult: 2.0, power: 2000, maxLv: 10, unlock: 100000 },
-  { id: 'quantum', name: '量子掌', icon: '&#9883;', desc: 'タップ威力 +12000', baseCost: 2e9, costMult: 2.05, power: 12000, maxLv: 8, unlock: 5e8 },
-  { id: 'void', name: 'ヴォイドブレイカー', icon: '&#127776;', desc: 'タップ威力 +80000', baseCost: 8e10, costMult: 2.1, power: 80000, maxLv: 6, unlock: 2e10 },
-  { id: 'origin', name: 'オリジンパルス', icon: '&#10024;', desc: 'タップ威力 +500000', baseCost: 3e12, costMult: 2.2, power: 500000, maxLv: 5, unlock: 5e11 },
+  { id: 'sharp', name: '鋭い指先', icon: '&#128296;', desc: 'タップ威力 +1', baseCost: 15, costMult: 1.4, power: 1, maxLv: Number.POSITIVE_INFINITY },
+  { id: 'double', name: 'ダブルタップ', icon: '&#9996;', desc: 'タップ威力 +3', baseCost: 200, costMult: 1.5, power: 3, maxLv: Number.POSITIVE_INFINITY, unlock: 10 },
+  { id: 'crystal_pick', name: 'クリスタルピック', icon: '&#9935;', desc: 'タップ威力 +10', baseCost: 2500, costMult: 1.6, power: 10, maxLv: Number.POSITIVE_INFINITY, unlock: 100 },
+  { id: 'midas', name: 'ミダスタッチ', icon: '&#128081;', desc: 'タップ威力 +50', baseCost: 50000, costMult: 1.7, power: 50, maxLv: Number.POSITIVE_INFINITY, unlock: 1000 },
+  { id: 'thunder', name: '雷拳', icon: '&#9889;', desc: 'タップ威力 +250', baseCost: 1e6, costMult: 1.8, power: 250, maxLv: Number.POSITIVE_INFINITY, unlock: 10000 },
+  { id: 'cosmic', name: 'コズミックブロー', icon: '&#127756;', desc: 'タップ威力 +2000', baseCost: 5e7, costMult: 2.0, power: 2000, maxLv: Number.POSITIVE_INFINITY, unlock: 100000 },
+  { id: 'quantum', name: '量子掌', icon: '&#9883;', desc: 'タップ威力 +12000', baseCost: 2e9, costMult: 2.05, power: 12000, maxLv: Number.POSITIVE_INFINITY, unlock: 5e8 },
+  { id: 'void', name: 'ヴォイドブレイカー', icon: '&#127776;', desc: 'タップ威力 +80000', baseCost: 8e10, costMult: 2.1, power: 80000, maxLv: Number.POSITIVE_INFINITY, unlock: 2e10 },
+  { id: 'origin', name: 'オリジンパルス', icon: '&#10024;', desc: 'タップ威力 +500000', baseCost: 3e12, costMult: 2.2, power: 500000, maxLv: Number.POSITIVE_INFINITY, unlock: 5e11 },
 ];
 
 // 施設（自動生産）
 const AUTO_UPGRADES = [
-  { id: 'cursor', name: 'オートカーソル', icon: '&#128433;', desc: '+1/s', baseCost: 50, costMult: 1.15, cps: 1, maxLv: 100 },
-  { id: 'fairy', name: 'クリスタルフェアリー', icon: '&#129498;', desc: '+5/s', baseCost: 400, costMult: 1.15, cps: 5, maxLv: 80, unlock: 100 },
-  { id: 'golem', name: 'ストーンゴーレム', icon: '&#129516;', desc: '+20/s', baseCost: 3000, costMult: 1.15, cps: 20, maxLv: 60, unlock: 1000 },
-  { id: 'wizard', name: 'クリスタルメイジ', icon: '&#129497;', desc: '+100/s', baseCost: 20000, costMult: 1.15, cps: 100, maxLv: 50, unlock: 5000 },
-  { id: 'dragon', name: 'ベビードラゴン', icon: '&#128009;', desc: '+500/s', baseCost: 200000, costMult: 1.15, cps: 500, maxLv: 40, unlock: 50000 },
-  { id: 'phoenix', name: 'Phoenix', icon: '&#128038;', desc: '+2500/s', baseCost: 2e6, costMult: 1.15, cps: 2500, maxLv: 30, unlock: 500000 },
-  { id: 'titan', name: 'エンシェントタイタン', icon: '&#128122;', desc: '+15000/s', baseCost: 2.5e7, costMult: 1.15, cps: 15000, maxLv: 20, unlock: 5000000 },
-  { id: 'nebula', name: 'ネビュラコア', icon: '&#127752;', desc: '+100000/s', baseCost: 5e8, costMult: 1.15, cps: 100000, maxLv: 15, unlock: 100000000 },
-  { id: 'forge', name: 'アストラルフォージ', icon: '&#127981;', desc: '+650000/s', baseCost: 8e9, costMult: 1.16, cps: 650000, maxLv: 12, unlock: 2e9 },
-  { id: 'rift', name: 'リフト抽出機', icon: '&#128301;', desc: '+3.5M/s', baseCost: 2e11, costMult: 1.17, cps: 3.5e6, maxLv: 10, unlock: 8e10 },
-  { id: 'chrono', name: 'クロノリアクター', icon: '&#9201;', desc: '+20M/s', baseCost: 6e12, costMult: 1.18, cps: 2e7, maxLv: 8, unlock: 2e12 },
-  { id: 'singularity', name: '特異点エンジン', icon: '&#128171;', desc: '+150M/s', baseCost: 3e14, costMult: 1.2, cps: 1.5e8, maxLv: 6, unlock: 1e14 },
+  { id: 'cursor', name: 'オートカーソル', icon: '&#128433;', desc: '+1/s', baseCost: 50, costMult: 1.15, cps: 1, maxLv: Number.POSITIVE_INFINITY },
+  { id: 'fairy', name: 'クリスタルフェアリー', icon: '&#129498;', desc: '+5/s', baseCost: 400, costMult: 1.15, cps: 5, maxLv: Number.POSITIVE_INFINITY, unlock: 100 },
+  { id: 'golem', name: 'ストーンゴーレム', icon: '&#129516;', desc: '+20/s', baseCost: 3000, costMult: 1.15, cps: 20, maxLv: Number.POSITIVE_INFINITY, unlock: 1000 },
+  { id: 'wizard', name: 'クリスタルメイジ', icon: '&#129497;', desc: '+100/s', baseCost: 20000, costMult: 1.15, cps: 100, maxLv: Number.POSITIVE_INFINITY, unlock: 5000 },
+  { id: 'dragon', name: 'ベビードラゴン', icon: '&#128009;', desc: '+500/s', baseCost: 200000, costMult: 1.15, cps: 500, maxLv: Number.POSITIVE_INFINITY, unlock: 50000 },
+  { id: 'phoenix', name: 'Phoenix', icon: '&#128038;', desc: '+2500/s', baseCost: 2e6, costMult: 1.15, cps: 2500, maxLv: Number.POSITIVE_INFINITY, unlock: 500000 },
+  { id: 'titan', name: 'エンシェントタイタン', icon: '&#128122;', desc: '+15000/s', baseCost: 2.5e7, costMult: 1.15, cps: 15000, maxLv: Number.POSITIVE_INFINITY, unlock: 5000000 },
+  { id: 'nebula', name: 'ネビュラコア', icon: '&#127752;', desc: '+100000/s', baseCost: 5e8, costMult: 1.15, cps: 100000, maxLv: Number.POSITIVE_INFINITY, unlock: 100000000 },
+  { id: 'forge', name: 'アストラルフォージ', icon: '&#127981;', desc: '+650000/s', baseCost: 8e9, costMult: 1.16, cps: 650000, maxLv: Number.POSITIVE_INFINITY, unlock: 2e9 },
+  { id: 'rift', name: 'リフト抽出機', icon: '&#128301;', desc: '+3.5M/s', baseCost: 2e11, costMult: 1.17, cps: 3.5e6, maxLv: Number.POSITIVE_INFINITY, unlock: 8e10 },
+  { id: 'chrono', name: 'クロノリアクター', icon: '&#9201;', desc: '+20M/s', baseCost: 6e12, costMult: 1.18, cps: 2e7, maxLv: Number.POSITIVE_INFINITY, unlock: 2e12 },
+  { id: 'singularity', name: '特異点エンジン', icon: '&#128171;', desc: '+150M/s', baseCost: 3e14, costMult: 1.2, cps: 1.5e8, maxLv: Number.POSITIVE_INFINITY, unlock: 1e14 },
 ];
 
 // 転生強化（スターで購入）
@@ -1356,6 +1356,11 @@ function bindBuyAmountSelector(panel) {
   });
 }
 
+
+function getLevelCapLabel(upgrade) {
+  return Number.isFinite(upgrade.maxLv) ? upgrade.maxLv : '∞';
+}
+
 function calcBulkBuyResult(upgrade, level, amount) {
   const maxPurchases = amount === 'max' ? (upgrade.maxLv - level) : Math.min(amount, upgrade.maxLv - level);
   let totalCost = 0;
@@ -1375,7 +1380,7 @@ function calcBulkBuyResult(upgrade, level, amount) {
 // ─── Render Upgrades Tab ─────────────────────────────────
 function renderUpgrades() {
   const panel = $('panel-upgrades');
-  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 1 / 10 / 25 / 100 / 全購入</div>';
+  let html = '<div class="section-title">タップ強化</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">購入数: 1 / 10 / 25 / 100 / 全購入 / タップ強化上限なし</div>';
 
   for (const u of CLICK_UPGRADES) {
     const lv = state.clickLevels[u.id] || 0;
@@ -1407,7 +1412,7 @@ function renderUpgrades() {
       <div class="upgrade-right">
         ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
           `<div class="upgrade-cost">${formatNum(cost)}</div>`}
-        <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
+        <div class="upgrade-level">Lv.${lv}/${getLevelCapLabel(u)}</div>
       </div>
       ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
     </div>`;
@@ -1424,7 +1429,7 @@ function renderUpgrades() {
 
 function renderAuto() {
   const panel = $('panel-auto');
-  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25% / 高Lvはコスト増でインフレ抑制</div>';
+  let html = '<div class="section-title">施設</div>' + renderBuyAmountSelector() + '<div class="settings-sublabel">施設ボーナス: 各施設25個ごとに生産+25% / 施設上限なし / 高Lvはコスト増でインフレ抑制</div>';
 
   for (const u of AUTO_UPGRADES) {
     const lv = state.autoLevels[u.id] || 0;
@@ -1458,7 +1463,7 @@ function renderAuto() {
       <div class="upgrade-right">
         ${maxed ? '<div class="upgrade-cost" style="color:var(--gold);">最大</div>' :
           `<div class="upgrade-cost">${formatNum(cost)}</div>`}
-        <div class="upgrade-level">Lv.${lv}/${u.maxLv}</div>
+        <div class="upgrade-level">Lv.${lv}/${getLevelCapLabel(u)}</div>
       </div>
       ${!maxed ? `<div class="upgrade-progress" style="width:${progress}%"></div>` : ''}
     </div>`;
