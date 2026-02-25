@@ -910,6 +910,15 @@ function formatTime(seconds) {
   return `${h}h ${m}m`;
 }
 
+function formatPercent(mult) {
+  return `${Math.round((mult - 1) * 100)}%`;
+}
+
+function getAchievementRewardText(reward) {
+  if (!reward) return '';
+  return reward.label || '';
+}
+
 // ─── Audio Engine (Web Audio API) ────────────────────────
 const AudioEngine = {
   ctx: null,
@@ -967,6 +976,9 @@ const CLICK_UPGRADES = [
   { id: 'midas', name: 'Midas Touch', icon: '&#128081;', desc: 'Tap power +50', baseCost: 50000, costMult: 1.7, power: 50, maxLv: 20, unlock: 1000 },
   { id: 'thunder', name: 'Thunder Fist', icon: '&#9889;', desc: 'Tap power +250', baseCost: 1e6, costMult: 1.8, power: 250, maxLv: 15, unlock: 10000 },
   { id: 'cosmic', name: 'Cosmic Blow', icon: '&#127756;', desc: 'Tap power +2000', baseCost: 5e7, costMult: 2.0, power: 2000, maxLv: 10, unlock: 100000 },
+  { id: 'quantum', name: 'Quantum Palm', icon: '&#9883;', desc: 'Tap power +12000', baseCost: 2e9, costMult: 2.05, power: 12000, maxLv: 8, unlock: 5e8 },
+  { id: 'void', name: 'Void Breaker', icon: '&#127776;', desc: 'Tap power +80000', baseCost: 8e10, costMult: 2.1, power: 80000, maxLv: 6, unlock: 2e10 },
+  { id: 'origin', name: 'Origin Pulse', icon: '&#10024;', desc: 'Tap power +500000', baseCost: 3e12, costMult: 2.2, power: 500000, maxLv: 5, unlock: 5e11 },
 ];
 
 // Auto clicker upgrades (CPS generators)
@@ -979,6 +991,10 @@ const AUTO_UPGRADES = [
   { id: 'phoenix', name: 'Phoenix', icon: '&#128038;', desc: '+2500/s', baseCost: 2e6, costMult: 1.15, cps: 2500, maxLv: 30, unlock: 500000 },
   { id: 'titan', name: 'Ancient Titan', icon: '&#128122;', desc: '+15000/s', baseCost: 2.5e7, costMult: 1.15, cps: 15000, maxLv: 20, unlock: 5000000 },
   { id: 'nebula', name: 'Nebula Core', icon: '&#127752;', desc: '+100000/s', baseCost: 5e8, costMult: 1.15, cps: 100000, maxLv: 15, unlock: 100000000 },
+  { id: 'forge', name: 'Astral Forge', icon: '&#127981;', desc: '+650000/s', baseCost: 8e9, costMult: 1.16, cps: 650000, maxLv: 12, unlock: 2e9 },
+  { id: 'rift', name: 'Rift Extractor', icon: '&#128301;', desc: '+3.5M/s', baseCost: 2e11, costMult: 1.17, cps: 3.5e6, maxLv: 10, unlock: 8e10 },
+  { id: 'chrono', name: 'Chrono Reactor', icon: '&#9201;', desc: '+20M/s', baseCost: 6e12, costMult: 1.18, cps: 2e7, maxLv: 8, unlock: 2e12 },
+  { id: 'singularity', name: 'Singularity Engine', icon: '&#128171;', desc: '+150M/s', baseCost: 3e14, costMult: 1.2, cps: 1.5e8, maxLv: 6, unlock: 1e14 },
 ];
 
 // Prestige upgrades (bought with stars)
@@ -991,31 +1007,43 @@ const PRESTIGE_UPGRADES = [
   { id: 'p_cps2', name: 'Galaxy Engine', icon: '&#128640;', desc: 'Auto speed x3', cost: 5, effect: 'cpsMult', value: 3 },
   { id: 'p_start', name: 'Head Start', icon: '&#127939;', desc: 'Start with 1000 crystals per star', cost: 3, effect: 'headStart', value: 1000 },
   { id: 'p_super', name: 'Supernova', icon: '&#128165;', desc: 'All production x5', cost: 10, effect: 'allMult', value: 5 },
+  { id: 'p_starforge', name: 'Starforge Core', icon: '&#11088;', desc: 'Stars gain x1.5', cost: 8, effect: 'starGain', value: 1.5 },
+  { id: 'p_eternity', name: 'Eternal Loop', icon: '&#9854;', desc: 'Keep 10% crystals on prestige', cost: 12, effect: 'prestigeCarry', value: 0.1 },
+  { id: 'p_overdrive', name: 'Overclock Reality', icon: '&#9889;', desc: 'All production x8', cost: 20, effect: 'allMult', value: 8 },
 ];
 
 // Achievements
 const ACHIEVEMENTS = [
-  { id: 'a_click1', name: 'First Tap', icon: '&#128073;', desc: 'Tap the crystal once', check: s => s.totalClicks >= 1, reward: 10 },
-  { id: 'a_click10', name: 'Tapper', icon: '&#9995;', desc: 'Tap 100 times', check: s => s.totalClicks >= 100, reward: 50 },
-  { id: 'a_click1k', name: 'Click Master', icon: '&#128170;', desc: 'Tap 1,000 times', check: s => s.totalClicks >= 1000, reward: 200 },
-  { id: 'a_click10k', name: 'Click Legend', icon: '&#127942;', desc: 'Tap 10,000 times', check: s => s.totalClicks >= 10000, reward: 1000 },
-  { id: 'a_click100k', name: 'Click God', icon: '&#128293;', desc: 'Tap 100,000 times', check: s => s.totalClicks >= 100000, reward: 10000 },
-  { id: 'a_earn100', name: 'Collector', icon: '&#128142;', desc: 'Earn 100 crystals total', check: s => s.totalEarned >= 100, reward: 20 },
-  { id: 'a_earn10k', name: 'Hoarder', icon: '&#128176;', desc: 'Earn 10K crystals total', check: s => s.totalEarned >= 10000, reward: 500 },
-  { id: 'a_earn1m', name: 'Millionaire', icon: '&#127975;', desc: 'Earn 1M crystals total', check: s => s.totalEarned >= 1e6, reward: 5000 },
-  { id: 'a_earn1b', name: 'Billionaire', icon: '&#127961;', desc: 'Earn 1B crystals total', check: s => s.totalEarned >= 1e9, reward: 50000 },
-  { id: 'a_earn1t', name: 'Trillionaire', icon: '&#127756;', desc: 'Earn 1T crystals total', check: s => s.totalEarned >= 1e12, reward: 500000 },
-  { id: 'a_cps10', name: 'Automated', icon: '&#9881;', desc: 'Reach 10/s auto', check: s => s.cps >= 10, reward: 100 },
-  { id: 'a_cps100', name: 'Factory', icon: '&#127981;', desc: 'Reach 100/s auto', check: s => s.cps >= 100, reward: 500 },
-  { id: 'a_cps1k', name: 'Mass Production', icon: '&#128200;', desc: 'Reach 1K/s auto', check: s => s.cps >= 1000, reward: 2000 },
-  { id: 'a_cps10k', name: 'Crystal Empire', icon: '&#128081;', desc: 'Reach 10K/s auto', check: s => s.cps >= 10000, reward: 10000 },
-  { id: 'a_cps100k', name: 'Crystal Universe', icon: '&#127752;', desc: 'Reach 100K/s auto', check: s => s.cps >= 100000, reward: 100000 },
-  { id: 'a_prestige1', name: 'Reborn', icon: '&#11088;', desc: 'Prestige once', check: s => s.totalPrestiges >= 1, reward: 0 },
-  { id: 'a_prestige5', name: 'Star Collector', icon: '&#127775;', desc: 'Prestige 5 times', check: s => s.totalPrestiges >= 5, reward: 0 },
-  { id: 'a_prestige10', name: 'Star Master', icon: '&#128171;', desc: 'Prestige 10 times', check: s => s.totalPrestiges >= 10, reward: 0 },
-  { id: 'a_upgrade1', name: 'First Upgrade', icon: '&#9650;', desc: 'Buy your first upgrade', check: s => s.totalUpgrades >= 1, reward: 10 },
-  { id: 'a_upgrade25', name: 'Upgrade Addict', icon: '&#128640;', desc: 'Buy 25 upgrades', check: s => s.totalUpgrades >= 25, reward: 1000 },
-  { id: 'a_upgrade100', name: 'Max Upgrader', icon: '&#128171;', desc: 'Buy 100 upgrades', check: s => s.totalUpgrades >= 100, reward: 10000 },
+  { id: 'a_click1', name: 'First Tap', icon: '&#128073;', desc: 'Tap the crystal once', check: s => s.totalClicks >= 1, reward: { type: 'clickMult', value: 1.03, label: 'Tap power +3%' } },
+  { id: 'a_click10', name: 'Tapper', icon: '&#9995;', desc: 'Tap 100 times', check: s => s.totalClicks >= 100, reward: { type: 'clickMult', value: 1.05, label: 'Tap power +5%' } },
+  { id: 'a_click1k', name: 'Click Master', icon: '&#128170;', desc: 'Tap 1,000 times', check: s => s.totalClicks >= 1000, reward: { type: 'clickMult', value: 1.08, label: 'Tap power +8%' } },
+  { id: 'a_click10k', name: 'Click Legend', icon: '&#127942;', desc: 'Tap 10,000 times', check: s => s.totalClicks >= 10000, reward: { type: 'clickMult', value: 1.12, label: 'Tap power +12%' } },
+  { id: 'a_click100k', name: 'Click God', icon: '&#128293;', desc: 'Tap 100,000 times', check: s => s.totalClicks >= 100000, reward: { type: 'allMult', value: 1.25, label: 'All production +25%' } },
+  { id: 'a_click1m', name: 'Dimension Knuckle', icon: '&#129304;', desc: 'Tap 1,000,000 times', check: s => s.totalClicks >= 1e6, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
+
+  { id: 'a_earn100', name: 'Collector', icon: '&#128142;', desc: 'Earn 100 crystals total', check: s => s.totalEarned >= 100, reward: { type: 'cpsMult', value: 1.03, label: 'Auto speed +3%' } },
+  { id: 'a_earn10k', name: 'Hoarder', icon: '&#128176;', desc: 'Earn 10K crystals total', check: s => s.totalEarned >= 10000, reward: { type: 'cpsMult', value: 1.06, label: 'Auto speed +6%' } },
+  { id: 'a_earn1m', name: 'Millionaire', icon: '&#127975;', desc: 'Earn 1M crystals total', check: s => s.totalEarned >= 1e6, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
+  { id: 'a_earn1b', name: 'Billionaire', icon: '&#127961;', desc: 'Earn 1B crystals total', check: s => s.totalEarned >= 1e9, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
+  { id: 'a_earn1t', name: 'Trillionaire', icon: '&#127756;', desc: 'Earn 1T crystals total', check: s => s.totalEarned >= 1e12, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
+  { id: 'a_earn1qa', name: 'Interstellar Bank', icon: '&#128640;', desc: 'Earn 1Qa crystals total', check: s => s.totalEarned >= 1e15, reward: { type: 'allMult', value: 1.5, label: 'All production +50%' } },
+
+  { id: 'a_cps10', name: 'Automated', icon: '&#9881;', desc: 'Reach 10/s auto', check: s => s.cps >= 10, reward: { type: 'cpsMult', value: 1.05, label: 'Auto speed +5%' } },
+  { id: 'a_cps100', name: 'Factory', icon: '&#127981;', desc: 'Reach 100/s auto', check: s => s.cps >= 100, reward: { type: 'cpsMult', value: 1.08, label: 'Auto speed +8%' } },
+  { id: 'a_cps1k', name: 'Mass Production', icon: '&#128200;', desc: 'Reach 1K/s auto', check: s => s.cps >= 1000, reward: { type: 'cpsMult', value: 1.12, label: 'Auto speed +12%' } },
+  { id: 'a_cps10k', name: 'Crystal Empire', icon: '&#128081;', desc: 'Reach 10K/s auto', check: s => s.cps >= 10000, reward: { type: 'allMult', value: 1.1, label: 'All production +10%' } },
+  { id: 'a_cps100k', name: 'Crystal Universe', icon: '&#127752;', desc: 'Reach 100K/s auto', check: s => s.cps >= 100000, reward: { type: 'allMult', value: 1.2, label: 'All production +20%' } },
+  { id: 'a_cps10m', name: 'Galactic Industry', icon: '&#127756;', desc: 'Reach 10M/s auto', check: s => s.cps >= 1e7, reward: { type: 'allMult', value: 1.35, label: 'All production +35%' } },
+
+  { id: 'a_prestige1', name: 'Reborn', icon: '&#11088;', desc: 'Prestige once', check: s => s.totalPrestiges >= 1, reward: { type: 'starGain', value: 1.05, label: 'Future star gain +5%' } },
+  { id: 'a_prestige5', name: 'Star Collector', icon: '&#127775;', desc: 'Prestige 5 times', check: s => s.totalPrestiges >= 5, reward: { type: 'starGain', value: 1.1, label: 'Future star gain +10%' } },
+  { id: 'a_prestige10', name: 'Star Master', icon: '&#128171;', desc: 'Prestige 10 times', check: s => s.totalPrestiges >= 10, reward: { type: 'starGain', value: 1.15, label: 'Future star gain +15%' } },
+  { id: 'a_prestige25', name: 'Infinite Voyager', icon: '&#9854;', desc: 'Prestige 25 times', check: s => s.totalPrestiges >= 25, reward: { type: 'starGain', value: 1.25, label: 'Future star gain +25%' } },
+
+  { id: 'a_upgrade1', name: 'First Upgrade', icon: '&#9650;', desc: 'Buy your first upgrade', check: s => s.totalUpgrades >= 1, reward: { type: 'costReduction', value: 0.99, label: 'Upgrade cost -1%' } },
+  { id: 'a_upgrade25', name: 'Upgrade Addict', icon: '&#128640;', desc: 'Buy 25 upgrades', check: s => s.totalUpgrades >= 25, reward: { type: 'costReduction', value: 0.97, label: 'Upgrade cost -3%' } },
+  { id: 'a_upgrade100', name: 'Max Upgrader', icon: '&#128171;', desc: 'Buy 100 upgrades', check: s => s.totalUpgrades >= 100, reward: { type: 'costReduction', value: 0.94, label: 'Upgrade cost -6%' } },
+  { id: 'a_upgrade300', name: 'Architect Prime', icon: '&#127959;', desc: 'Buy 300 upgrades', check: s => s.totalUpgrades >= 300, reward: { type: 'costReduction', value: 0.9, label: 'Upgrade cost -10%' } },
 ];
 
 // ─── Game State ──────────────────────────────────────────
@@ -1053,7 +1081,7 @@ function getDefaultState() {
 
 // ─── Computed Values ─────────────────────────────────────
 function getPrestigeMultipliers() {
-  let clickMult = 1, cpsMult = 1, costReduction = 1, offlineMult = 1, headStart = 0, allMult = 1;
+  let clickMult = 1, cpsMult = 1, costReduction = 1, offlineMult = 1, headStart = 0, allMult = 1, starGain = 1, prestigeCarry = 0;
   for (const pid of state.prestigeUpgrades) {
     const pu = PRESTIGE_UPGRADES.find(p => p.id === pid);
     if (!pu) continue;
@@ -1064,11 +1092,40 @@ function getPrestigeMultipliers() {
       case 'offlineMult': offlineMult *= pu.value; break;
       case 'headStart': headStart += pu.value * state.stars; break;
       case 'allMult': allMult *= pu.value; break;
+      case 'starGain': starGain *= pu.value; break;
+      case 'prestigeCarry': prestigeCarry += pu.value; break;
     }
   }
   // Base star bonus: +5% per star
   const starBonus = 1 + state.stars * 0.05;
-  return { clickMult: clickMult * starBonus * allMult, cpsMult: cpsMult * starBonus * allMult, costReduction, offlineMult, headStart };
+  return {
+    clickMult: clickMult * starBonus * allMult,
+    cpsMult: cpsMult * starBonus * allMult,
+    costReduction,
+    offlineMult,
+    headStart,
+    starGain,
+    prestigeCarry: Math.min(prestigeCarry, 0.9),
+  };
+}
+
+function getAchievementBoosts() {
+  const boosts = {
+    clickMult: 1,
+    cpsMult: 1,
+    allMult: 1,
+    costReduction: 1,
+    starGain: 1,
+  };
+
+  for (const id of state.unlockedAchievements) {
+    const achievement = ACHIEVEMENTS.find(a => a.id === id);
+    if (!achievement || !achievement.reward) continue;
+    const { type, value } = achievement.reward;
+    if (type in boosts) boosts[type] *= value;
+  }
+
+  return boosts;
 }
 
 function calcClickPower() {
@@ -1078,7 +1135,8 @@ function calcClickPower() {
     base += u.power * lv;
   }
   const m = getPrestigeMultipliers();
-  return Math.floor(base * m.clickMult);
+  const a = getAchievementBoosts();
+  return Math.floor(base * m.clickMult * a.clickMult * a.allMult);
 }
 
 function calcCPS() {
@@ -1088,17 +1146,21 @@ function calcCPS() {
     base += u.cps * lv;
   }
   const m = getPrestigeMultipliers();
-  return Math.floor(base * m.cpsMult);
+  const a = getAchievementBoosts();
+  return Math.floor(base * m.cpsMult * a.cpsMult * a.allMult);
 }
 
 function calcUpgradeCost(baseCost, costMult, level) {
   const m = getPrestigeMultipliers();
-  return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction);
+  const a = getAchievementBoosts();
+  return Math.floor(baseCost * Math.pow(costMult, level) * m.costReduction * a.costReduction);
 }
 
 function calcPrestigeStars() {
   // Stars earned based on total crystals earned this run
-  return Math.floor(Math.pow(state.totalEarned / 1e6, 0.5));
+  const m = getPrestigeMultipliers();
+  const a = getAchievementBoosts();
+  return Math.floor(Math.pow(state.totalEarned / 1e6, 0.5) * m.starGain * a.starGain);
 }
 
 // ─── DOM References ──────────────────────────────────────
@@ -1329,7 +1391,6 @@ function renderPrestige() {
   const newStars = Math.max(0, potentialStars - 0); // stars earned this prestige
   const m = getPrestigeMultipliers();
   const currentBonus = Math.floor((1 + state.stars * 0.05) * 100 - 100);
-  const afterBonus = Math.floor((1 + (state.stars + newStars) * 0.05) * 100 - 100);
 
   let html = `<div class="prestige-panel">
     <div class="prestige-info-box">
@@ -1338,7 +1399,8 @@ function renderPrestige() {
       <div class="prestige-bonus">Current bonus: +${currentBonus}% all production</div>
       <div class="prestige-next">
         Prestige now for <strong>+${newStars} &#11088;</strong><br>
-        <small>(Need ${formatNum(1e6)} total earned for first star)</small>
+        <small>(Need ${formatNum(1e6)} total earned for first star)</small><br>
+        <small>Carry over: <strong>${Math.floor(m.prestigeCarry * 100)}%</strong> crystals</small>
       </div>
       <button class="prestige-btn" id="prestige-btn" ${newStars < 1 ? 'disabled' : ''}>
         &#11088; Prestige (+${newStars} stars)
@@ -1392,7 +1454,7 @@ function renderAchievements() {
       <div class="achievement-info">
         <div class="achievement-name">${isUnlocked ? a.name : '???'}</div>
         <div class="achievement-desc">${a.desc}</div>
-        ${a.reward > 0 ? `<div class="achievement-reward">${isUnlocked ? '&#10003; ' : ''}+${formatNum(a.reward)} crystals</div>` : ''}
+        ${a.reward ? `<div class="achievement-reward">${isUnlocked ? '&#10003; ' : ''}${getAchievementRewardText(a.reward)}</div>` : ''}
       </div>
     </div>`;
   }
@@ -1402,7 +1464,7 @@ function renderAchievements() {
 
 function renderSettings() {
   const panel = $('panel-settings');
-  const m = getPrestigeMultipliers();
+  const achievementBoosts = getAchievementBoosts();
 
   panel.innerHTML = `
     <div class="section-title">Settings</div>
@@ -1464,6 +1526,8 @@ function renderSettings() {
       <div class="stat-row"><span class="stat-label">Star Bonus</span><span class="stat-value">+${Math.floor(state.stars * 5)}%</span></div>
       <div class="stat-row"><span class="stat-label">Upgrades Bought</span><span class="stat-value">${state.totalUpgrades}</span></div>
       <div class="stat-row"><span class="stat-label">Achievements</span><span class="stat-value">${state.unlockedAchievements.length}/${ACHIEVEMENTS.length}</span></div>
+      <div class="stat-row"><span class="stat-label">Achievement Prod Boost</span><span class="stat-value">+${formatPercent(achievementBoosts.allMult)}</span></div>
+      <div class="stat-row"><span class="stat-label">Achievement Star Boost</span><span class="stat-value">+${formatPercent(achievementBoosts.starGain)}</span></div>
       <div class="stat-row"><span class="stat-label">Time Played</span><span class="stat-value">${formatTime(state.totalTimePlayed)}</span></div>
       <div class="stat-row" style="border:none;"><span class="stat-label">Best CPS</span><span class="stat-value">${formatNum(state.bestCps)}/s</span></div>
     </div>
@@ -1558,6 +1622,9 @@ function buyPrestigeUpgrade(id) {
 function doPrestige(newStars) {
   if (newStars < 1) return;
 
+  const m = getPrestigeMultipliers();
+  const carryCrystal = Math.floor(state.crystals * m.prestigeCarry);
+
   if (!confirm(`Prestige for +${newStars} stars?\nAll crystals and upgrades will be reset, but you keep stars and star upgrades.`)) return;
 
   state.stars += newStars;
@@ -1592,10 +1659,14 @@ function doPrestige(newStars) {
   state.bestClickPower = keepStats.bestClickPower;
 
   // Head start
-  const m = getPrestigeMultipliers();
   if (m.headStart > 0) {
     state.crystals = m.headStart;
     state.totalEarned = m.headStart;
+  }
+
+  if (carryCrystal > 0) {
+    state.crystals += carryCrystal;
+    state.totalEarned += carryCrystal;
   }
 
   AudioEngine.prestige();
@@ -1620,12 +1691,9 @@ function checkAchievements() {
     if (state.unlockedAchievements.includes(a.id)) continue;
     if (a.check(checkState)) {
       state.unlockedAchievements.push(a.id);
-      if (a.reward > 0) {
-        state.crystals += a.reward;
-        state.totalEarned += a.reward;
-      }
       AudioEngine.achievement();
-      showToast(a.icon, a.name + ' unlocked!');
+      const rewardText = a.reward ? ` (${getAchievementRewardText(a.reward)})` : '';
+      showToast(a.icon, a.name + ' unlocked!' + rewardText);
 
       // Update achievements badge
       updateBadges();
